@@ -1,0 +1,164 @@
+body, html {
+    height: 100%;
+  }
+
+
+header h1{
+    color: white;
+    text-align: center;
+    padding-bottom: 5%;
+
+}
+
+footer{
+    padding: 5px;
+    background-image: linear-gradient(rgb(22, 31, 78), rgb(12, 12, 12));
+}
+
+.inputbox{
+    width: 100%;
+    text-align: left;
+    margin: 10px;
+}
+
+/*------------------------------------*\
+	Background-Image
+\*------------------------------------*/
+
+.bg-img{
+    position: absolute;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+ 
+}
+
+.bg-img .overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    opacity: .6;
+    background: #000;
+}
+
+.bg-text {
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+    color: white;
+    font-weight: bold;
+    border: 3px solid #f1f1f1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 80%;
+    padding: 20px;
+    text-align: center;
+  }
+
+/*------------------------------------*\
+	Logo
+\*------------------------------------*/
+.byte-img {
+   width: 250px;
+   height: 44px;
+ 
+
+   
+}
+
+
+/*------------------------------------*\
+	Navbar background-image: linear-gradient(rgb(13, 18, 43), rgb(12, 12, 12));
+\*------------------------------------*/
+
+
+.nav-color {
+    padding: 8px;
+    box-shadow: 3px 5px 70px #2277af;
+    background-image: linear-gradient(rgb(22, 31, 78), rgb(12, 12, 12));
+
+}
+
+.nav-button {
+    margin-left: 10em;
+}
+
+
+
+.formattext{
+    text-align: left;
+    word-break: break-word;
+}
+
+
+/*------------------------------------*\
+	Index-Menu
+\*------------------------------------*/
+.menu-card {
+    box-shadow: -1px 1px 5px 0 rgb(0 0 0 / 20%);
+    transition: 0.3s;
+    border-radius: 15px; 
+    padding: 10px;
+    margin: 10px;
+    display: inline-block;
+    margin-top: 10em;
+     
+    
+}
+
+
+
+
+.formatid{
+    margin-left: 15px;
+    margin-top: 7px;
+}
+
+.formatbtn{
+    
+    
+    margin-left: 15px;  
+    
+    margin-bottom: 0px;
+    
+
+}
+
+.formatavatar{
+    width: 250px;
+    height: 250px;
+}
+
+.formatpc{
+     margin-left: 0px;
+     margin-bottom: 15px;
+    
+}
+
+.teste{
+    
+    margin-top: 15px;
+    margin-left: 5px;
+
+
+
+}
+
+.add-estoque {
+    margin-top: 10em;
+}
+
+.format-add-button{
+   display: inline-block;
+   margin-left: 5px;
+}
