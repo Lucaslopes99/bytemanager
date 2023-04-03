@@ -4,11 +4,10 @@
 
     
     include "config.php";
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $number = $_POST['number'];
-    $state = $_POST['state'];
-    $city = $_POST['city'];
+    $name = $_POST['name_product'];
+    $price = $_POST['price_product'];
+    $quantity = $_POST['quantity'];
+    $type = $_POST['type'];
     // $latitude = $_POST['latitude'];
     // $longitude = $_POST['longitude'];
          
@@ -17,15 +16,19 @@
     //$sql = 'INSERT INTO `candidates`(`name`, `email`, `number`, `state`, `city`) 
     //VALUES ("'.$name.'", "'.$email.'", "'.$number.'", "'.$state.'", "'.$city.'" , "'.$latitude.'", "'.$longitude.'")'; 
 
-    $sql = "INSERT INTO `candidates` (name, email, number, state, city) 
-    VALUES ('$name', '$email','$number', '.$state','$city')";
+    //$sql = "INSERT INTO `product` (name_product, price_product, quantity, type,) 
+    //VALUES ('$name, '$price,'$quantity', '$type')";
+
+    $sql = 'INSERT INTO `product`(`name_product`, `price_product`, `quantity`, `type`) 
+    VALUES ("'.$name.'", "'.$price.'", "'.$quantity.'", "'.$type.'")';
+    
 
 
     if(mysqli_query($conn, $sql)){
-        //echo "$name Cadastrado com sucesso! - ";
-        header("Location: /bytemanager/estoque.php");
+        echo "$name Cadastrado com sucesso! - ";
+        
       
-        $idcandidate = mysqli_insert_id($conn);       
+        $idproduct = mysqli_insert_id($conn);       
 
 
 
@@ -36,7 +39,7 @@
 
         $filenamec = $_FILES['candidateimg']['name'];
         $ext = pathinfo($filenamec, PATHINFO_EXTENSION);
-        $locationc = "candidates_img/".$idcandidate.".".$ext;
+        $locationc = "candidates_img/".$idproduct.".".$ext;
 
         if(move_uploaded_file($_FILES['candidateimg']['tmp_name'], $locationc)){
             echo "Candidate img uploaded sucessifuly - ";
@@ -45,21 +48,6 @@
             echo "Candidate image not uploaded";
         }
 
-            
-        // Saving computer img
-
-        $filenamepc = $_FILES['candidateimg']['name'];
-        $ext = pathinfo($filenamepc, PATHINFO_EXTENSION);
-        $locationpc = "pc_img/".$idcandidate.".".$ext;
-        if(move_uploaded_file($_FILES['computerimg']['tmp_name'], $locationpc)){
-            echo "Computer img uploaded sucessifuly - ";
-        }
-        else{
-            echo "file not uploaded";
-        }
-
-        // Saving location 
-   
 
 
 

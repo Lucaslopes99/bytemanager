@@ -42,58 +42,40 @@
                     <div class="form-group format mx-auto inputbox">
                         <!-- <label for="name" class="col-sm-2 col-form-label mx-auto"></label> -->
                         <div class=" ">
-                            <input required type="text" class="form-control mx-auto" name="name" placeholder="Name">
-                        </div>
-                    </div>
-
-                    <div class="form-group format mx-auto inputbox">
-                        <!-- <label for="email" class="col-sm-2 col-form-label mx-auto"></label> -->
-                        <div class="">
-                            <input required type="email" class="form-control mx-auto" name="email" placeholder="Email">
+                            <input required type="text" class="form-control mx-auto" name="name_product" placeholder="Produto">
                         </div>
                     </div>
 
                     <div class="form-group format mx-auto inputbox">
                         <!-- <label for="inputEmail3" class="col-sm-2 col-form-label mx-auto"></label> -->
                         <div class="">
-                            <input required type="text" class="form-control mx-auto" name="number" placeholder="Phone Number">
+                            <input required type="text" class="form-control mx-auto" name="price_product" placeholder="Preço produto"> 
+                        </div>
+                    </div>
+
+                    <div class="form-group format mx-auto inputbox">
+                        <!-- <label for="inputEmail3" class="col-sm-2 col-form-label mx-auto"></label> -->
+                        <div class="">
+                            <input required type="text" class="form-control mx-auto" name="quantity" placeholder="Quantidade produto">
                         </div>
                     </div>
 
                     <div class="form-group format mx-auto inputbox">
                         <!-- <label for="state" class="col-sm-2 col-form-label mx-auto"></label> -->
                         <div class="">
-                            <select required type="text" class="form-control mx-auto" name="state">
-                                <option selected>State...</option disabled>
-                                <option>SP</option>
-                                <option>RJ</option>
+                            <select required type="text" class="form-control mx-auto" name="type">
+                                <option selected>Item...</option disabled>
+                                <option>Memória RAM</option>
+                                <option>SSD</option>
+                                <option>Outro</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group format mx-auto inputbox">
-                        <!-- <label for="city" class="col-sm-2 col-form-label mx-auto"></label> -->
-                        <div class="">
-                            <select required type="text" class="form-control mx-auto" name="city">
-                                <option selected>City...</option disabled>
-                                <option>Presidente Prudente</option>
-                                <option>Pirapózinho</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group format mx-auto inputbox">
-                        <label for="inputState" class=" col-form-label mx-auto">Foto de perfil</label>
+                        <label for="inputState" class=" col-form-label mx-auto">Foto Produto</label>
                         <div class="">
                             <input required class="form-control" type="file" name="candidateimg" />
-
-                        </div>
-                    </div>
-
-                    <div class="form-group format mx-auto inputbox">
-                        <label for="inputState" class="col-form-label mx-auto">Foto computador</label>
-                        <div class="">
-                            <input required class="form-control" type="file" name="computerimg" placeholder="asasas">
 
                         </div>
                     </div>
@@ -106,6 +88,7 @@
                     </div>
                     
                     <button type="submit" class="btn btn-primary mt-3">Confirmar</button>
+                    <a href="estoque.php"><button type="button"  class="btn btn-primary mt-3 ml-3">Cancelar</button></a>
                 </form>
             
             </div>

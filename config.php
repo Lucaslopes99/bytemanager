@@ -6,7 +6,7 @@
     $server = "localhost";
     $user = "root";
     $password = "";
-    $database = "db_contest";
+    $database = "db_bytemanager";
 
     
 

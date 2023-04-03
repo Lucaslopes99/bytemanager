@@ -1,9 +1,9 @@
  <?php
 
     include "config.php";
-    $id = $_GET['id_candidates'] ?? '';
-    $sql = "DELETE FROM candidates
-    WHERE id_candidates = $id";
+    $id_product = $_GET['id'] ?? '';
+    $sql = "DELETE FROM product
+    WHERE id_product = $id_product";
 
     
     
