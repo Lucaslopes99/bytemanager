@@ -27,8 +27,10 @@
     $search = $_POST['search'] ?? '';
 
     include "config.php";
+  
 
     $sql = "SELECT * FROM product WHERE name_product LIKE '%$search%'";
+
     // var_dump($search);
     // exit();
 
@@ -38,6 +40,7 @@
 
     <!---codigo html-->
 
+    <header>
     <nav id="" class="navbar bg-dark nav-color">
         <div class="mr-sm-2 mt-4 ">
             <a href="index.php"><img class="byte-img" src="img/byte.png" alt="..."></a>
@@ -49,11 +52,18 @@
 
 
     </nav>
+    </header>
+    
+        <div class="col-sm-12">
+
+                <a href="addestoque.php"><img src="img/addestoque.png" class="add-icon-estoque"> </a>
 
 
+        </div>
 
 
-    <a href="addestoque.php"> <img src="img/addestoque.png" class="format-add-icon">  </a>
+   
+    
 
     <main class="container mt-5">
         <div class="bg-img" style="background-image: url('./img/background.jpg');">
@@ -89,19 +99,20 @@
                 $name_product = $row['name_product'];
                 $price_product = $row['price_product'];
                 $quantity = $row['quantity'];
-                $type = $row['type'];
+                $type = $row['type'];  
+    
 
 
             ?>
 
 
 
-                <div class="card mb-3 formatcard">
+                <div class="card mb-3">
                     <div class="row g-0">
                         <div class="col-md-4">
 
 
-                            <img class="formatavatar" src="candidates_img/<?php echo "$id_product" ?>.jpg" class="img-fluid rounded-start" alt="...">
+                            <img class="formatavatar" src="candidates_img/<?php echo "$id_product" ?>.jpg" class="img-fluid rounded-start" alt="Product">
 
 
 
@@ -138,7 +149,7 @@
                                 <hr class="">
                                 <span>Tipo: <?php echo "$type" ?> </span> <br>
                                 <span>Quantidade: <?php echo "$quantity" ?> </span> <br>
-                                <span>R$: <?php echo "$price_product" ?> </span> <br>
+                                <span>Preço: R$ <?php echo "$price_product" ?> </span> <br>
                                 
                             
                             </div>

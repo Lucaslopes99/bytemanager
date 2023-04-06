@@ -4,10 +4,11 @@
 
     
     include "config.php";
+
     $name = $_POST['name_product'];
     $price = $_POST['price_product'];
     $quantity = $_POST['quantity'];
-    $type = $_POST['type'];
+    $idtype = $_GET['idtype'];
     // $latitude = $_POST['latitude'];
     // $longitude = $_POST['longitude'];
          
@@ -19,8 +20,8 @@
     //$sql = "INSERT INTO `product` (name_product, price_product, quantity, type,) 
     //VALUES ('$name, '$price,'$quantity', '$type')";
 
-    $sql = 'INSERT INTO `product`(`name_product`, `price_product`, `quantity`, `type`) 
-    VALUES ("'.$name.'", "'.$price.'", "'.$quantity.'", "'.$type.'")';
+    $sql = 'INSERT INTO `product`(`name_product`, `price_product`, `quantity`, `type_product_id_type`) 
+    VALUES ("'.$name.'", "'.$price.'", "'.$quantity.'", "'.$idtype.'")';
     
 
 
@@ -42,10 +43,12 @@
         $locationc = "candidates_img/".$idproduct.".".$ext;
 
         if(move_uploaded_file($_FILES['candidateimg']['tmp_name'], $locationc)){
-            echo "Candidate img uploaded sucessifuly - ";
+            //header("Location: /bytemanager/estoque.php");
+            echo "$name Cadstrado";
+            exit();
         }
         else{
-            echo "Candidate image not uploaded";
+            echo "Não foi otario";
         }
 
 

@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="col-sm" >
                     <div class="card menu-card view overlay zoom" >
-                        <img class="card-img-top img-fluid" src="https://cdn-icons-png.flaticon.com/512/5166/5166970.png" alt="Card image cap">
+                        <img class="card-img-top img-fluid menu-img-module" src="https://cdn-icons-png.flaticon.com/512/5166/5166970.png" alt="Card image cap">
                             <div class="card-body mask flex-center">
                                 <h5 class="card-title">Estoque</h5>
                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -45,7 +45,7 @@
 
                 <div class="col-sm" >
                     <div class="card menu-card">
-                        <img class="card-img-top" src="https://cdn-icons-png.flaticon.com/512/2228/2228780.png" alt="Card image cap">
+                        <img class="card-img-top menu-img-module" src="https://cdn-icons-png.flaticon.com/512/2228/2228780.png" alt="Card image cap">
                             <div class="card-body">
                                 <h5 class="card-title">Orçamentos</h5>
                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -55,9 +55,11 @@
                     </div>
                 </div> 
 
+                
+
                 <div class="col-sm" >
                     <div class="card menu-card">
-                        <img class="card-img-top" src="https://cdn-icons-png.flaticon.com/512/1/1284.png" alt="Card image cap">
+                        <img class="card-img-top menu-img-module" src="https://cdn-icons-png.flaticon.com/512/1/1284.png" alt="Card image cap">
                             <div class="card-body">
                                 <h5 class="card-title">Aprovações</h5>
                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>

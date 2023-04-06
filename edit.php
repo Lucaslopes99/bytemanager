@@ -88,15 +88,17 @@
                     <div class="form-group format mx-auto inputbox">
                         <!-- <label for="state" class="col-sm-2 col-form-label mx-auto"></label> -->
                         <div class="">
-                            <select required class="form-control mx-auto" name="type" required value="<?php echo $row['type']; ?>">
-                                <option selected>Item...</option disabled>
+                            <select required type="text" class="form-control mx-auto input-type-estoque mt-1" name="type">
+                            <option selected disabled><?php echo $row['type']; ?></option>
                                 <option>Memória RAM</option>
                                 <option>SSD</option>
+                                <option>Outro</option>
                             </select>
+                            <a href="addtype.php"><img src="img/addtype.png" class="add-icon-type mt-1"> </a>
                         </div>
                     </div>
 
-                    <div class="form-group format mx-auto inputbox">
+                    <div class="form-group format mx-auto inputbox mt-5">
                         <label for="inputState" class=" col-form-label mx-auto">Foto de perfil</label>
                         <div class="">
                             <input class="form-control" type="file" name="candidateimg" />
