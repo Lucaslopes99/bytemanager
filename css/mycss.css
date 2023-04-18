@@ -1,5 +1,6 @@
 body, html {
     height: 100%;
+
   }
 
 
@@ -8,6 +9,10 @@ header h1{
     text-align: center;
     padding-bottom: 5%;
 
+}
+
+.maxwidth {
+    max-width:60%;
 }
 
 footer{
@@ -130,10 +135,10 @@ footer{
 }
 
 .formatbtn{
-   position: absolute;
-   margin-left: 62%;
-    
-
+  
+   position:absolute;
+    display: inline-block;
+   margin-left: 30%;
 }
 
 .formatavatar{
@@ -142,7 +147,7 @@ footer{
     margin: 5px;
 }
 
-.formatpc{
+.formatButtonSearch{
      margin-left: 0px;
      margin-bottom: 15px;
      margin-top: 15px;
@@ -160,7 +165,7 @@ footer{
 }
 
 .input-type-estoque{
-    width: 80%;
+    width: 75%;
     float: left;
     position: absolute;
  }
@@ -197,7 +202,7 @@ footer{
     width: 37px;
     height: 37px;
     position: absolute;
-    margin-left: 82%;
+    margin-left: 78%;
     background-color: #007bff;
     border: none;
     color: white;
@@ -215,7 +220,7 @@ footer{
 
 .add-icon-type:hover{
     opacity: 0.5;
-    background-color: #0367d1;
+    background-color: #0855a7;
  
 }
 

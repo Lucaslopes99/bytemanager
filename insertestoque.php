@@ -8,20 +8,16 @@
     $name = $_POST['name_product'];
     $price = $_POST['price_product'];
     $quantity = $_POST['quantity'];
-    $idtype = $_GET['idtype'];
-    // $latitude = $_POST['latitude'];
-    // $longitude = $_POST['longitude'];
-         
+    //$type = $_GET['id_type'];
+
+
+    //$sql = 'INSERT INTO `product`(`name_product`, `price_product`, `quantity`, `type_product_id_type`) 
+    //VALUES ("'.$name.'", "'.$price.'", "'.$quantity.'", "'.$type.'")';
+
+    $sql = 'INSERT INTO `product`(`name_product`, `price_product`, `quantity`) 
+    VALUES ("'.$name.'", "'.$price.'", "'.$quantity.'"';
+
     
-    // Outro método de inserção
-    //$sql = 'INSERT INTO `candidates`(`name`, `email`, `number`, `state`, `city`) 
-    //VALUES ("'.$name.'", "'.$email.'", "'.$number.'", "'.$state.'", "'.$city.'" , "'.$latitude.'", "'.$longitude.'")'; 
-
-    //$sql = "INSERT INTO `product` (name_product, price_product, quantity, type,) 
-    //VALUES ('$name, '$price,'$quantity', '$type')";
-
-    $sql = 'INSERT INTO `product`(`name_product`, `price_product`, `quantity`, `type_product_id_type`) 
-    VALUES ("'.$name.'", "'.$price.'", "'.$quantity.'", "'.$idtype.'")';
     
 
 
@@ -43,7 +39,7 @@
         $locationc = "candidates_img/".$idproduct.".".$ext;
 
         if(move_uploaded_file($_FILES['candidateimg']['tmp_name'], $locationc)){
-            //header("Location: /bytemanager/estoque.php");
+            //header("Location: /bytemanager/estoque2.php");
             echo "$name Cadstrado";
             exit();
         }

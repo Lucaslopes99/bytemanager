@@ -22,7 +22,7 @@
 
 
 
-        header("Location: /bytemanager/estoque.php");
+        header("Location: /bytemanager/estoque2.php");
         exit();
     }
     else{

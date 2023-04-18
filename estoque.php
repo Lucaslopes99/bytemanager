@@ -29,7 +29,14 @@
     include "config.php";
   
 
-    $sql = "SELECT * FROM product WHERE name_product LIKE '%$search%'";
+    //$sql = "SELECT * FROM product WHERE name_product LIKE '%$search%'";
+    $sql = "SELECT * 
+    FROM product AS pro
+    INNER JOIN type_product AS tp ON tp.id_type = pro.type_product_id_type
+    WHERE pro.name_product LIKE '%$search%'";
+
+
+   
 
     // var_dump($search);
     // exit();
@@ -54,9 +61,13 @@
     </nav>
     </header>
     
-        <div class="col-sm-12">
 
+
+    
+        <div class="col-sm-12">
                 <a href="addestoque.php"><img src="img/addestoque.png" class="add-icon-estoque"> </a>
+
+                
 
 
         </div>
@@ -183,6 +194,8 @@
 
         </div>
     </main>
+
+    
 
 
     <footer class="bg-dark text-center text-white">
