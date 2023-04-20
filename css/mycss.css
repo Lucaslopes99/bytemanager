@@ -134,12 +134,6 @@ footer{
     margin-top: 7px;
 }
 
-.formatbtn{
-  
-   position:absolute;
-    display: inline-block;
-   margin-left: 30%;
-}
 
 .formatavatar{
     width: 200px;
@@ -174,8 +168,6 @@ footer{
     width: 60px;
     height: 60px;
     position: fixed;
-    margin-left: 90%;
-    margin-top: 40%;
     background-color: #007bff;
     border: none;
     color: white;
@@ -186,6 +178,8 @@ footer{
     border-radius: 50%;
     text-align: center;
     z-index: 999;
+    bottom: 15px;
+    right: 15px;
  
 
     

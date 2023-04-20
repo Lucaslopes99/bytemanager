@@ -8,19 +8,22 @@
     $name = $_POST['name_product'];
     $price = $_POST['price_product'];
     $quantity = $_POST['quantity'];
-    //$type = $_GET['id_type'];
+    $type = $_POST['id_type'];
 
 
-    //$sql = 'INSERT INTO `product`(`name_product`, `price_product`, `quantity`, `type_product_id_type`) 
-    //VALUES ("'.$name.'", "'.$price.'", "'.$quantity.'", "'.$type.'")';
+    $filenamec = $_FILES['candidateimg']['name'];
+    $ext = pathinfo($filenamec, PATHINFO_EXTENSION);
+    $imageName = uniqid().".".$ext;
+    $locationc = "candidates_img/".$imageName;
 
-    $sql = 'INSERT INTO `product`(`name_product`, `price_product`, `quantity`) 
-    VALUES ("'.$name.'", "'.$price.'", "'.$quantity.'"';
+
+    $sql = 'INSERT INTO `product`(`name_product`, `price_product`, `quantity`, `type_product_id_type`, `image_name`) 
+    VALUES ("'.$name.'", "'.$price.'", "'.$quantity.'", "'.$type.'", "'.$imageName.'")';
+
+    // $sql = 'INSERT INTO `product`(`name_product`, `price_product`, `quantity`) 
+    // VALUES ("'.$name.'", "'.$price.'", "'.$quantity.'"';
 
     
-    
-
-
     if(mysqli_query($conn, $sql)){
         echo "$name Cadastrado com sucesso! - ";
         
@@ -32,14 +35,8 @@
         // var_dump());
         // exit();
 
-        // Saving candidate img
-
-        $filenamec = $_FILES['candidateimg']['name'];
-        $ext = pathinfo($filenamec, PATHINFO_EXTENSION);
-        $locationc = "candidates_img/".$idproduct.".".$ext;
-
         if(move_uploaded_file($_FILES['candidateimg']['tmp_name'], $locationc)){
-            //header("Location: /bytemanager/estoque2.php");
+            header("Location: /bytemanager/estoque2.php");
             echo "$name Cadstrado";
             exit();
         }

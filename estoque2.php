@@ -34,19 +34,20 @@
 
 
     //$sql = "SELECT * FROM product WHERE name_product LIKE '%$search%'";
-    $sql = "SELECT * 
+    $sqlGetProducts = "SELECT * 
     FROM product AS pro
     INNER JOIN type_product AS tp ON tp.id_type = pro.type_product_id_type
     WHERE pro.name_product LIKE '%$search%'";
 
-
+    $sqlGetAllProductTypes = "SELECT * 
+    FROM type_product";
 
 
     // var_dump($search);
     // exit();
 
-    $result = mysqli_query($conn, $sql);
-
+    $products = mysqli_query($conn, $sqlGetProducts);
+    $productTypes = mysqli_query($conn, $sqlGetAllProductTypes);
     ?>
 
     <!---codigo html-->
@@ -82,7 +83,7 @@
                 </div>
                 <div class="modal-body">
 
-                    <form action="addestoque.php" method="POST" enctype="multipart/form-data" class="mx-md-5">
+                    <form action="insertestoque.php" method="POST" enctype="multipart/form-data" class="mx-md-5">
                         <input type="hidden" name="acao" value="cadastrar"></input>
                         <div class="form-group format mx-auto inputbox">
                             <!-- <label for="name" class="col-sm-2 col-form-label mx-auto"></label> -->
@@ -109,25 +110,17 @@
                         <div class="form-group format mx-auto inputbox">
                             <!-- <label for="state" class="col-sm-2 col-form-label mx-auto"></label> -->
                             <div class="">
-
-                                <input type="hidden" name="idtype"></input>
-                                <select required type="text" class="form-control mx-auto input-type-estoque" name="type">
+                                <select required type="text" class="form-control mx-auto input-type-estoque" name="id_type">
                                     <option selected disabled required>Tipo Produto</option>
-
                                     <?php
-                                    while ($row = mysqli_fetch_assoc($result)) {
+                                    while ($row = mysqli_fetch_assoc($productTypes)) {
                                         $type = $row['type'];
-
-
-
+                                        $id_type = $row['id_type'];
                                     ?>
-
-                                        <option value=""><?php echo $type ?> </option>
-
+                                        <option value="<?= $id_type ?>"><?php echo $type ?> </option>
                                     <?php
                                     }
                                     ?>
-
                                 </select>
 
                                 <a data-bs-toggle="modal" data-bs-target="#addTypeModal"><img src="img/addtype.png" class="add-icon-type"> </a>
@@ -231,12 +224,15 @@
 
             </div>
 
+            
             <?php ?>
-            <?php while ($row = mysqli_fetch_assoc($result)) {
+            <?php while ($row = mysqli_fetch_assoc($products)) {
                 $id_product = $row['id_product'];
                 $name_product = $row['name_product'];
                 $price_product = $row['price_product'];
                 $quantity = $row['quantity'];
+                $imageName = $row['image_name'];
+
 
 
 
@@ -249,7 +245,7 @@
                         <div class="col-md-4">
 
 
-                            <img class="formatavatar" src="candidates_img/<?php echo "$id_product" ?>.jpg" class="img-fluid rounded-start" alt="Product">
+                            <img class="formatavatar" src="candidates_img/<?= $imageName?>" class="img-fluid rounded-start" alt="Product">
 
 
 
@@ -260,7 +256,7 @@
                             <div class="card-body">
                                 <div class="row ">
 
-                                    <div class="card-title formatid">
+                                    <div class="card-title formatid col">
                                         <h5> <?php echo "$name_product" ?>
                                             <!-- Quantidade em estoque < ?php echo "$id_candidates" ?> -->
 
@@ -270,9 +266,9 @@
 
 
 
-                                    <div class="formatbtn mr-sm-2">
+                                    <div class="formatbtn col">
 
-                                        <div class="">
+                                        <div class="text-right">
                                             <a type="button" href="edit.php?id=<?php echo $id_product ?>" class="btn btn-success">Edit</a>
                                             <a type="button" href="delete.php?id=<?php echo $id_product ?>" class="btn btn-danger ">Delete</a>
 

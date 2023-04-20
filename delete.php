@@ -8,7 +8,7 @@
 
     $result = mysqli_query($conn, $sql);
 
-    header("Location: /bytemanager/estoque.php");
+    header("Location: /bytemanager/estoque2.php");
     exit();
 
 ?>
