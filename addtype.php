@@ -59,7 +59,7 @@
                    
                     
                     <button type="submit" class="btn btn-primary mt-3">Confirmar</button>
-                    <a href="addestoque.php"><button type="button"  class="btn btn-primary mt-3 ml-3">Cancelar</button></a>
+                    <a href="estoque2.php"><button type="button"  class="btn btn-primary mt-3 ml-3">Cancelar</button></a>
                 </form>
             
             </div>

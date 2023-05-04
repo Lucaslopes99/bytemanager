@@ -23,7 +23,7 @@
 </head>
 
 <body>
-    
+
 
     <!-- Php -->
 
@@ -33,21 +33,22 @@
     include "config.php";
 
 
+    // Lista all Products, types and search for the name
     //$sql = "SELECT * FROM product WHERE name_product LIKE '%$search%'";
-    $sqlGetProducts = "SELECT * 
+    $sqlGetALLProducts = "SELECT * 
     FROM product AS pro
     INNER JOIN type_product AS tp ON tp.id_type = pro.type_product_id_type
     WHERE pro.name_product LIKE '%$search%'";
+    $products = mysqli_query($conn, $sqlGetALLProducts);
 
-    $sqlGetAllProductTypes = "SELECT * 
-    FROM type_product";
-
-
-    // var_dump($search);
-    // exit();
-
-    $products = mysqli_query($conn, $sqlGetProducts);
+    // List all types on add product page
+    $sqlGetAllProductTypes = "SELECT * FROM type_product ";
     $productTypes = mysqli_query($conn, $sqlGetAllProductTypes);
+
+    // List all types on add type from edit page
+    $sqlShowAllTypes = "SELECT * FROM type_product";
+    $sqlAllTypes = mysqli_query($conn, $sqlShowAllTypes);
+
     ?>
 
     <!---codigo html-->
@@ -70,9 +71,9 @@
 
 
 
-    <a  href="addestoque.php" data-bs-toggle="modal" data-bs-target="#addEstoqueModal"><img src="img/addestoque.png" class="add-icon-estoque"> </a>
+    <a href="addestoque.php" data-bs-toggle="modal" data-bs-target="#addEstoqueModal"><img src="img/addestoque.png" class="add-icon-estoque"> </a>
 
-    <!-- Modal -->
+    <!-- Modal Add Product -->
 
     <div class="modal fade modal-dialog modal-lg" id="addEstoqueModal" tabindex="-1" aria-labelledby="addEstoqueModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -84,7 +85,7 @@
                 <div class="modal-body">
 
                     <form action="insertestoque.php" method="POST" enctype="multipart/form-data" class="mx-md-5">
-                        <input type="hidden" name="acao" value="cadastrar"></input>
+                        <input type="hidden" name="id_product" value=""></input>
                         <div class="form-group format mx-auto inputbox">
                             <!-- <label for="name" class="col-sm-2 col-form-label mx-auto"></label> -->
                             <div class=" ">
@@ -110,7 +111,7 @@
                         <div class="form-group format mx-auto inputbox">
                             <!-- <label for="state" class="col-sm-2 col-form-label mx-auto"></label> -->
                             <div class="">
-                                <select required type="text" class="form-control mx-auto input-type-estoque" name="id_type">
+                                <select required type="text" class="form-control mx-auto input-type-estoque" name="type">
                                     <option selected disabled required>Tipo Produto</option>
                                     <?php
                                     while ($row = mysqli_fetch_assoc($productTypes)) {
@@ -145,9 +146,9 @@
 
 
                         <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary ">Confirmar</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    </div>
+                            <button type="submit" class="btn btn-primary ">Confirmar</button>
+                            <button href="estoque2.php" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        </div>
 
                     </form>
 
@@ -157,8 +158,9 @@
         </div>
     </div>
 
-    <!-- End Modal -->
+    <!-- END Modal Add Product-->
 
+    <!-- Modal Add Type-->
 
     <div class="modal fade" id="addTypeModal" tabindex="-1" aria-labelledby="addTypeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -168,28 +170,72 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                <form action="inserttype.php" method="POST" enctype="multipart/form-data" class="mx-md-5">
-                    <input type="hidden" name="idtype" value="cadastrar"></input>              
-                    <div class="form-group format mx-auto inputbox">
-                        <!-- <label for="state" class="col-sm-2 col-form-label mx-auto"></label> -->
-                        <div class="">
-                            <input required type="text" class="form-control mx-auto" name="type" placeholder="Adicionar tipo"> 
+                    <form action="inserttype.php" method="POST" enctype="multipart/form-data" class="mx-md-5">
+                        <input type="hidden" name="id_type" value="cadastrar"></input>
+                        <div class="form-group format mx-auto inputbox">
+                            <!-- <label for="state" class="col-sm-2 col-form-label mx-auto"></label> -->
+                            <div class="">
+                                <input required type="text" class="form-control mx-auto" name="type" placeholder="Adicionar tipo">
+                            </div>
+
+                            <br>
+                            <div class="">
+
+
+                                <table class="table">
+                                    <tbody>
+                                        <?php
+
+
+
+                                        while ($row = $sqlAllTypes->fetch_assoc()) {
+
+
+
+
+
+                                            foreach ($row as $type) {
+
+
+
+                                                //echo "<th>".$id_type."</th>";
+
+                                            }
+                                        ?>
+                                            <tr>
+                                                <th scope="row"><?php echo count($row); ?></th>
+                                                <td><?php echo $row['type']; ?></td>
+                                                <td><a type="button" href="deletetype.php?id=<?php echo $id_type ?>" class="btn btn-danger button-modal-type">Delete</a></td>
+                                            </tr>
+
+
+                                        <?php
+                                        }
+
+
+
+
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+
                         </div>
-                    </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Confirmar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        </div>
 
 
-                    <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Confirmar</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    </div>
 
-                </form>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 
-
+    <!-- END Modal Add Type-->
 
 
     <main class="container mt-5">
@@ -224,13 +270,14 @@
 
             </div>
 
-            
+
             <?php ?>
             <?php while ($row = mysqli_fetch_assoc($products)) {
                 $id_product = $row['id_product'];
                 $name_product = $row['name_product'];
                 $price_product = $row['price_product'];
                 $quantity = $row['quantity'];
+                $type = $row['type'];
                 $imageName = $row['image_name'];
 
 
@@ -245,7 +292,7 @@
                         <div class="col-md-4">
 
 
-                            <img class="formatavatar" src="candidates_img/<?= $imageName?>" class="img-fluid rounded-start" alt="Product">
+                            <img class="formatavatar" src="candidates_img/<?= $imageName ?>" class="img-fluid rounded-start" alt="Product">
 
 
 
@@ -256,7 +303,7 @@
                             <div class="card-body">
                                 <div class="row ">
 
-                                    <div class="card-title formatid col">
+                                    <div class="mt-2 col">
                                         <h5> <?php echo "$name_product" ?>
                                             <!-- Quantidade em estoque < ?php echo "$id_candidates" ?> -->
 
@@ -270,7 +317,7 @@
 
                                         <div class="text-right">
                                             <a type="button" href="edit.php?id=<?php echo $id_product ?>" class="btn btn-success">Edit</a>
-                                            <a type="button" href="delete.php?id=<?php echo $id_product ?>" class="btn btn-danger ">Delete</a>
+                                            <a type="button" href="deleteproduct.php?id=<?php echo $id_product ?>" class="btn btn-danger button-">Delete</a>
 
 
 
@@ -280,9 +327,9 @@
 
                                 </div>
                                 <hr class="">
-                                <span>Tipo: <?php echo "$type" ?> </span> <br>
-                                <span>Quantidade: <?php echo "$quantity" ?> </span> <br>
-                                <span>Preço: R$ <?php echo "$price_product" ?> </span> <br>
+                                <span class="fw-medium">Tipo: </span> <span class="fw-normal"> <?php echo "$type" ?> </span> <br>
+                                <span class="fw-medium">Quantidade: </span> <span class="fw-normal"> <?php echo "$quantity" ?> </span> <br>
+                                <span class="fw-medium">Preço: </span> <span class="fw-normal">R$ <?php echo "$price_product" ?> </span> <br>
 
 
                             </div>

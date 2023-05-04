@@ -20,8 +20,6 @@
         $idproduct = mysqli_insert_id($conn);    
 
 
-
-
         header("Location: /bytemanager/estoque2.php");
         exit();
     }

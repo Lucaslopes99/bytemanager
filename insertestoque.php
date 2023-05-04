@@ -8,7 +8,7 @@
     $name = $_POST['name_product'];
     $price = $_POST['price_product'];
     $quantity = $_POST['quantity'];
-    $type = $_POST['id_type'];
+    $type = $_POST['type'];
 
 
     $filenamec = $_FILES['candidateimg']['name'];
@@ -50,6 +50,7 @@
     }
     else{
         echo "$name Não cadastrado!";
+        
     }
 
 

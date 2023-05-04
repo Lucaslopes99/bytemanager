@@ -9,8 +9,11 @@
     <title>Edit candidate</title>
     <!--Bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <!--CSS-->
     <link rel="stylesheet" href="css/mycss.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </head>
 
@@ -19,12 +22,31 @@
     <?php
 
     include "config.php";
-    $id = $_GET['id'] ?? '';
+    $id_product = $_GET['id'] ?? '';
+    $id_type = $_GET['id'] ?? '';
 
 
-    $sql = "SELECT * FROM product WHERE id_product = '$id'";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_assoc($result);
+    // Get each atribute from products on edit page
+    $sqlGetProducts = "SELECT * FROM product WHERE id_product = '$id_product'";
+    $product = mysqli_query($conn, $sqlGetProducts);
+    $rowProduct = mysqli_fetch_assoc($product);
+
+    // Get the type from each product on edit page
+    $sqlGetProductType = "SELECT type FROM type_product AS tp INNER JOIN product AS pro ON tp.id_type = pro.type_product_id_type where pro.id_product = $id_type ";
+    $productType = mysqli_query($conn, $sqlGetProductType);
+    $rowType = mysqli_fetch_assoc($productType);
+
+    // Get and show all types registred on edit page from espefic product
+    $sqlShowAllTypes = "SELECT * FROM type_product";
+    $sqlAllTypes = mysqli_query($conn, $sqlShowAllTypes);
+
+    // List all types on add type from edit page
+    $query = "SELECT id_type, type FROM type_product";
+    $sqlListTypes = mysqli_query($conn, $query);
+
+
+
+
 
 
 
@@ -63,40 +85,55 @@
 
 
                 <form action="editestoque.php" method="POST" enctype="multipart/form-data" class="mx-md-5">
-                    <input type="hidden" name="acao" value="cadastrar"></input>
+                    <input type="hidden" name="id_product" value="<?php echo $rowProduct['id_product']; ?>">
                     <div class="form-group format mx-auto inputbox">
                         <!-- <label for="name" class="col-sm-2 col-form-label mx-auto"></label> -->
                         <div class=" ">
-                            <input required type="text" class="form-control mx-auto" name="name_product" placeholder="Nome produto" required value="<?php echo $row['name_product']; ?>">
+                            <input required type="text" class="form-control mx-auto" name="name_product" placeholder="Nome produto" required value="<?php echo $rowProduct['name_product']; ?>">
                         </div>
                     </div>
 
                     <div class="form-group format mx-auto inputbox">
                         <!-- <label for="email" class="col-sm-2 col-form-label mx-auto"></label> -->
                         <div class="">
-                            <input required type="text" class="form-control mx-auto" name="price_product" placeholder="Preço" required value="R$: <?php echo $row['price_product']; ?>">
+                            <input required type="text" class="form-control mx-auto" name="price_product" placeholder="Preço" required value="R$: <?php echo $rowProduct['price_product']; ?>">
                         </div>
                     </div>
 
                     <div class="form-group format mx-auto inputbox">
                         <!-- <label for="inputEmail3" class="col-sm-2 col-form-label mx-auto"></label> -->
                         <div class="">
-                            <input required type="text" class="form-control mx-auto" name="quantity" placeholder="Quantidade" required value="<?php echo $row['quantity']; ?>">
+                            <input required type="text" class="form-control mx-auto" name="quantity" placeholder="Quantidade" required value="<?php echo $rowProduct['quantity']; ?>">
                         </div>
                     </div>
 
                     <div class="form-group format mx-auto inputbox">
                         <!-- <label for="state" class="col-sm-2 col-form-label mx-auto"></label> -->
-                        <div class="">
-                            <select required type="text" class="form-control mx-auto input-type-estoque mt-1" name="type">
-                            <option selected disabled><?php echo $row['type']; ?></option>
-                                <option>Memória RAM</option>
-                                <option>SSD</option>
-                                <option>Outro</option>
-                            </select>
-                            <a href="addtype.php"><img src="img/addtype.png" class="add-icon-type mt-1"> </a>
-                        </div>
+                        <select required type="text" class="form-control mx-auto input-type-estoque" name="id_type" value="">
+                            <option selected disabled required> <?php echo $rowType['type'] ?></option>
+                            <?php
+
+                            while ($row = mysqli_fetch_assoc($sqlAllTypes)) {
+                                $type = $row['type'];
+                                $id_type = $row['id_type'];
+
+
+
+                            ?>
+                                <option required value="<?php echo $row['id_type']; ?>"><?php echo $row['type'] ?> </option>
+
+
+                            <?php
+
+                            }
+                            ?>
+                        </select>
+
+
+
                     </div>
+
+
 
                     <div class="form-group format mx-auto inputbox mt-5">
                         <label for="inputState" class=" col-form-label mx-auto">Foto de perfil</label>
@@ -113,26 +150,112 @@
                             <!-- <button type="button" onclick="getLocation()" class="form-control formattext" name="location">Geolocalização</button> -->
                         </div>
                     </div>
+
+                    <a href="addestoque.php" data-bs-toggle="modal" data-bs-target="#addEstoqueModal"><img src="img/addestoque.png" class="add-icon-estoque"> </a>
+                    <a data-bs-toggle="modal" data-bs-target="#addTypeModal"><img src="img/addtype.png" class="add-icon-type"> </a>
+
                     <button type="submit" class="btn btn-primary mt-3 ">Confirmar</button>
-            
-                    <a href="estoque.php"><button type="button"  class="btn btn-primary mt-3 ml-3">Cancelar</button></a>
-                    
+                    <a href="estoque2.php"><button type="button" class="btn btn-primary mt-3 ml-3">Cancelar</button></a>
+
                 </form>
+
+
+
 
             </div>
         </div>
+
+        <div class="modal fade" id="addTypeModal" tabindex="-1" aria-labelledby="addTypeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="addTypeModalLabel">Adicionar Tipo</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="inserttype.php" method="POST" enctype="multipart/form-data" class="mx-md-5">
+                            <div class="form-group format mx-auto inputbox">
+                                <!-- <label for="state" class="col-sm-2 col-form-label mx-auto"></label> -->
+                                <div class="">
+                                    <input required type="text" class="form-control mx-auto" name="type" placeholder="Adicionar tipo">
+                                </div>
+
+                                <br>
+                                <div class="">
+
+
+                                    <table class="table">
+                                        <tbody>
+                                            <?php
+
+
+
+                                            while ($row = mysqli_fetch_assoc($sqlListTypes)) {
+                                                $id_type = $row['id_type'];
+
+
+
+
+                                                foreach ($row as $type) {
+
+
+
+                                                    //echo "<th>".$id_type."</th>";
+
+                                                }
+                                            ?>
+                                                <tr>
+                                                    <th scope="row"><?php echo count($row); ?></th>
+                                                    <td><?php echo $row['type']; ?></td>
+                                                    <td><a type="button" href="deletetype.php?id=<?php echo $id_type ?>" class="btn btn-danger button-modal-type">Delete</a></td>
+                                                </tr>
+
+
+                                            <?php
+                                            }
+
+
+
+
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Confirmar</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
         </div>
+
+
+
     </main>
 
 
-    <!--Scripts-->
+    <!-- Importando o jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-    <script src="js/jquery.slim.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <!-- Importando o js do bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 
 
+    <footer class="bg-dark text-center text-white">
+        <!-- Grid container -->
+        <!-- Grid container -->
+
+
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
 
 </html>
