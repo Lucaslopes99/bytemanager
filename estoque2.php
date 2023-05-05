@@ -118,7 +118,7 @@
                                         $type = $row['type'];
                                         $id_type = $row['id_type'];
                                     ?>
-                                        <option value="<?= $id_type ?>"><?php echo $type ?> </option>
+                                        <option value="<?= $row['id_type'] ?>"><?php echo $type ?> </option>
                                     <?php
                                     }
                                     ?>

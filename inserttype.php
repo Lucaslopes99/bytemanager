@@ -5,7 +5,7 @@
     
     include "config.php";
     $type = $_POST['type'];
-
+    $redirectUrl = $_GET['redirectUrl'];
 
     $sql = 'INSERT INTO `type_product`( `type`) 
     VALUES ("'.$type.'")';
@@ -18,9 +18,7 @@
         
       
         $idproduct = mysqli_insert_id($conn);    
-
-
-        header("Location: /bytemanager/estoque2.php");
+        header("Location: /bytemanager/".$redirectUrl);
         exit();
     }
     else{

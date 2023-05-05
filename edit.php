@@ -96,7 +96,7 @@
                     <div class="form-group format mx-auto inputbox">
                         <!-- <label for="email" class="col-sm-2 col-form-label mx-auto"></label> -->
                         <div class="">
-                            <input required type="text" class="form-control mx-auto" name="price_product" placeholder="Preço" required value="R$: <?php echo $rowProduct['price_product']; ?>">
+                            <input required type="text" class="form-control mx-auto" name="price_product" placeholder="Preço" required value="<?php echo $rowProduct['price_product'];?>">
                         </div>
                     </div>
 
@@ -109,24 +109,21 @@
 
                     <div class="form-group format mx-auto inputbox">
                         <!-- <label for="state" class="col-sm-2 col-form-label mx-auto"></label> -->
-                        <select required type="text" class="form-control mx-auto input-type-estoque" name="id_type" value="">
-                            <option selected disabled required> <?php echo $rowType['type'] ?></option>
+                        <select required type="text" class="form-control mx-auto input-type-estoque" name="id_type" value="<?php $rowProduct['type_product_id_type']; ?>">
+                            
                             <?php
-
-                            while ($row = mysqli_fetch_assoc($sqlAllTypes)) {
+                            while ($row = mysqli_fetch_assoc($sqlAllTypes)):
                                 $type = $row['type'];
                                 $id_type = $row['id_type'];
-
-
-
                             ?>
-                                <option required value="<?php echo $row['id_type']; ?>"><?php echo $row['type'] ?> </option>
+                                <?php if($rowProduct['type_product_id_type'] == $id_type): ?>  
+                                    <option selected value="<?php echo $row['id_type']; ?>"><?php echo $row['type'] ?> </option>
+                                
+                                    <?php else:?>
+                                        <option value="<?php echo $row['id_type']; ?>"><?php echo $row['type'] ?> </option>
+                                    <?php endif;?>
 
-
-                            <?php
-
-                            }
-                            ?>
+                         <?php endwhile;?>
                         </select>
 
 
@@ -151,8 +148,8 @@
                         </div>
                     </div>
 
-                    <a href="addestoque.php" data-bs-toggle="modal" data-bs-target="#addEstoqueModal"><img src="img/addestoque.png" class="add-icon-estoque"> </a>
-                    <a data-bs-toggle="modal" data-bs-target="#addTypeModal"><img src="img/addtype.png" class="add-icon-type"> </a>
+                   
+                    <a data-bs-toggle="modal" data-bs-target="#addTypeModal"><img src="img/addtype.png" class="add-icon-type-edit-page"> </a>
 
                     <button type="submit" class="btn btn-primary mt-3 ">Confirmar</button>
                     <a href="estoque2.php"><button type="button" class="btn btn-primary mt-3 ml-3">Cancelar</button></a>
@@ -173,8 +170,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="inserttype.php" method="POST" enctype="multipart/form-data" class="mx-md-5">
-                            <div class="form-group format mx-auto inputbox">
+                        <form action="inserttype.php?<?php echo rawurldecode('redirectUrl=edit.php?id='.$id_product)?>" method="POST" enctype="multipart/form-data" class="mx-md-5">
+                        <div class="form-group format mx-auto inputbox">
                                 <!-- <label for="state" class="col-sm-2 col-form-label mx-auto"></label> -->
                                 <div class="">
                                     <input required type="text" class="form-control mx-auto" name="type" placeholder="Adicionar tipo">
@@ -189,23 +186,17 @@
                                             <?php
 
 
-
+                                            $i = 0;
                                             while ($row = mysqli_fetch_assoc($sqlListTypes)) {
                                                 $id_type = $row['id_type'];
 
+                                                
+                                                $i++;
 
-
-
-                                                foreach ($row as $type) {
-
-
-
-                                                    //echo "<th>".$id_type."</th>";
-
-                                                }
                                             ?>
                                                 <tr>
-                                                    <th scope="row"><?php echo count($row); ?></th>
+                                                    <th scope="row"><?php echo $i; ?>
+                                                </th>
                                                     <td><?php echo $row['type']; ?></td>
                                                     <td><a type="button" href="deletetype.php?id=<?php echo $id_type ?>" class="btn btn-danger button-modal-type">Delete</a></td>
                                                 </tr>
