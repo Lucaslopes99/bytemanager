@@ -22,12 +22,12 @@
     <?php
 
     include "config.php";
-    $id_product = $_GET['id'] ?? '';
-    $id_type = $_GET['id'] ?? '';
+    $id_cliente = $_GET['id'] ?? '';
+;
 
 
     // Get each atribute from products on edit page
-    $sqlGetProducts = "SELECT * FROM product WHERE id_product = '$id_product'";
+    $sqlGetClientes = "SELECT * FROM cliente WHERE id_cliente = '$id_cliente'";
     $product = mysqli_query($conn, $sqlGetProducts);
     $rowProduct = mysqli_fetch_assoc($product);
 
@@ -93,7 +93,7 @@
 
 
             <div class="card-body">
-                <h5 class="card-title">Editar Item Estoque</h5>
+                <h5 class="card-title">Editar cliente</h5>
 
 
                 <form action="editestoque.php" method="POST" enctype="multipart/form-data" class="mx-md-5">
@@ -116,25 +116,26 @@
                         </div>
                     </div>
 
-                    <div class="form-group format mx-auto inputbox">
-                        <select required type="text" class="form-control mx-auto input-type-estoque" name="id_type" value="<?php echo $rowProduct['type_product_id_type']; ?>">
+                    <form action="insertcliente.php" method="POST" enctype="multipart/form-data" class="mx-md-5">
+                        <input type="hidden" name="id_orcamento" value=""></input>
+                        <div class="form-group format mx-auto inputbox">
+                            <div class=" ">
+                                <input required type="text" class="form-control mx-auto" name="name_cliente" placeholder="Nome fantasia" required value="<?php echo $rowProduct['name_cliente']; ?>>
+                            </div>
+                        </div>
 
-                            <?php
-                            while ($row = mysqli_fetch_assoc($sqlAllTypes)) :
-                                $type = $row['type'];
-                                $id_type = $row['id_type'];
-                            ?>
-                                <!-- Se o tipo selecionado for o tipo do produto mostra o tipo do produto selecionado -->
-                                <?php if ($rowProduct['type_product_id_type'] == $id_type) : ?>
-                                    <option selected value="<?php echo $row['id_type']; ?>"><?php echo $row['type'] ?> </option>
+                        <div class="form-group format mx-auto inputbox">
+                            <div class=" ">
+                                <input required type="text" class="form-control  cliente-input-cnpj" name="cnpj" placeholder="CNPJ" required value="<?php echo $rowProduct['cnpj']; ?>>
+                            </div>
+                        </div>
 
-                                <?php else : ?>
-                                    <!-- Senão mostra todos os tipos para alteração -->
-                                    <option value="<?php echo $row['id_type']; ?>"><?php echo $row['type'] ?> </option>
-                                <?php endif; ?>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary ">Confirmar</button>
+                            <button href="orcamento.php" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        </div>
 
-                            <?php endwhile; ?>
-                        </select>
+                    </form>
 
 
 

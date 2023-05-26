@@ -59,11 +59,11 @@
 
                 <div class="col-sm" >
                     <div class="card menu-card">
-                        <img class="card-img-top menu-img-module" src="https://cdn-icons-png.flaticon.com/512/1/1284.png" alt="Card image cap">
+                        <img class="card-img-top menu-img-module" src="https://cdn-icons-png.flaticon.com/512/44/44562.png" alt="Card image cap">
                             <div class="card-body">
-                                <h5 class="card-title">Aprovações</h5>
+                                <h5 class="card-title">Clientes</h5>
                                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="aprovacao.php" class="btn btn-primary">Go somewhere</a>
+                                <a href="cliente.php" class="btn btn-primary">Go somewhere</a>
                             </div>
                         </div>
                     </div>

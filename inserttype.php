@@ -16,10 +16,14 @@
     if(mysqli_query($conn, $sql)){
         echo "$type Cadastrado com sucesso! - ";
         
-      
+      if($redirectUrl != null){
         $idproduct = mysqli_insert_id($conn);    
         header("Location: /bytemanager/".$redirectUrl);
         exit();
+      }
+       else{
+        header("Location: /bytemanager/estoque2.php");
+       }
     }
     else{
         echo "$type Não cadastrado!";

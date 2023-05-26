@@ -44,6 +44,31 @@
     $sqlShowAllTypes = "SELECT * FROM type_product";
     $sqlAllTypes = mysqli_query($conn, $sqlShowAllTypes);
 
+    // Paginação estoque GPT ______________________________________________________________________________
+
+    // Determine how many records to display per page
+    $records_per_page = 10;
+
+    // Get the total number of records in your database
+    $query = "SELECT COUNT(*) as total FROM product";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    $total_records = $row['total'];
+
+    // Calculate the total number of pages
+    $total_pages = ceil($total_records / $records_per_page);
+
+    // Determine the current page number
+    $current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+    // Calculate the starting point for the query
+    $start_from = ($current_page - 1) * $records_per_page;
+
+    // Retrieve data for current page
+    $query = "SELECT * FROM product LIMIT $start_from, $records_per_page";
+    $result = mysqli_query($conn, $query);
+
+
     ?>
 
     <!---codigo html-->
@@ -52,18 +77,20 @@
         <nav id="" class="navbar bg-dark nav-color">
             <div class="mr-sm-2 mt-4 ">
                 <a href="index.php"><img class="byte-img" src="img/byte.png" alt="..."></a>
-                <a type="button" href="estoque2.php" class="btn btn-primary my-2 my-sm-0 ml-5">Estoque</a>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <a type="button" href="estoque2.php" class="btn btn-outline-info my-2 my-sm-0 ml-5">Estoque</a>
+
+                <div class="btn-group ml-3">
+                    <button type="button" class="btn btn-outline-info  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         Orçamentos
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-dark">
+                    <ul class="dropdown-menu dropdown-menu">
                         <li><a class="dropdown-item" href="orcamento.php">Aguardando</a></li>
-                        <li><a class="dropdown-item" href="orcamento.php">Orçados</a></li>
+                        <li><a class="dropdown-item" href="orcado.php">Orçados</a></li>
                         <li><a class="dropdown-item" href="orcamento.php">Aprovados</a></li>
                     </ul>
-                </div>
 
+                </div>
+                <a type="button" href="cliente.php" class="btn btn-outline-info  my-2 my-sm-0 ml-3">Clientes</a>
             </div>
         </nav>
     </header>
@@ -185,7 +212,9 @@
                                             <tr>
                                                 <th scope="row"><?php echo $i; ?></th>
                                                 <td><?php echo $row['type']; ?></td>
-                                                <td><a type="button" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" href="deletetype.php?id=<?php echo $id_type ?>" class="btn btn-danger button-modal-type">Delete</a></td>
+                                                <td><a type="button" data-bs-toggle="modal" data-bs-target="#confirmDeleteTypeModal" href="deletetype.php?id=<?php echo $id_type ?>" class="btn btn-danger button-modal-type">Delete</a></td>
+
+                                           
                                             </tr>
                                         <?php
                                         }
@@ -208,7 +237,7 @@
     <!-- END Modal Add Type-->
 
     <main class="container mt-5">
-        <div class="bg-img" style="background-image: url('./img/background.jpg');">
+        <div class="bg-img" style="background-image: url('./img/estoquebg.jpg');">
             <div class="overlay"></div>
         </div>
 
@@ -218,13 +247,15 @@
 
             <div>
                 <form class="input-group" method="POST">
-                    <input type="text" class="form-control mt-3" placeholder="Pesquisar Em Estoque" name="search">
+                    <input type="text" class="form-control mt-3" placeholder="Pesquisar em estoque" name="search">
                     <button type="submit" href="estoque.php" class="btn btn-primary formatButtonSearch teste ml-1">Confirm</button>
                 </form>
             </div>
 
 
             <?php ?>
+
+
             <?php while ($row = mysqli_fetch_assoc($products)) {
                 $id_product = $row['id_product'];
                 $name_product = $row['name_product'];
@@ -232,7 +263,15 @@
                 $quantity = $row['quantity'];
                 $type = $row['type'];
                 $imageName = $row['image_name'];
+                $producttype = $row['type_product_id_type'];
+
+              
+
+
+
             ?>
+
+                <!-- Cards estoque -->
 
                 <div class="card mb-3">
                     <div class="row g-0">
@@ -245,7 +284,16 @@
                                 <div class="row ">
                                     <div class="mt-2 col">
                                         <h5> <?php echo "$name_product" ?>
-                                            <!-- Quantidade em estoque < ?php echo "$id_candidates" ?> -->
+
+                                            <?php
+                                            if ($quantity <= 2) {
+                                            ?>
+                                                <img class="attention-icon mb-1" src="img/attention.png" alt="" title="Produto em baixa">
+
+                                            <?php
+
+                                            }
+                                            ?>
                                         </h5>
                                     </div>
 
@@ -256,7 +304,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <hr class="">
+                                <hr class="mt-1 mb-1">
                                 <span class="fw-medium">Tipo: </span> <span class="fw-normal"> <?php echo "$type" ?> </span> <br>
                                 <span class="fw-medium">Quantidade: </span> <span class="fw-normal"> <?php echo "$quantity" ?> </span> <br>
                                 <span class="fw-medium">Preço: </span> <span class="fw-normal">R$ <?php echo "$price_product" ?> </span> <br>
@@ -268,6 +316,26 @@
             }
             ?>
 
+            <!-- Paginação -->
+
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="estoque2.php?page=">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+
+
+
+
             <!-- Modal Confirm Delete Type-->
             <div class="modal fade" id="confirmDeleteTypeModal" tabindex="-1" aria-labelledby="confirmDeleteTypeModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -277,14 +345,37 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <h3 class="modal-title fs-6">Deseja Excluir Esse Registro? </h3>
+                            <h3 class="modal-title fs-6">Deseja Excluir Esse Tipo? </h3>
                             <!-- POP UP SIMPLES <a href="excluir.php" onclick="return confirm('Deseja excluir esse registro ?')">Excluir</a> -->
                         </div>
 
-                        <div class="modal-footer">
-                            <a type="button" href="deletetype.php?id=<?php echo $id_type ?>" class="btn btn-primary button-modal-type">Confirmar</a></td>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <div class="modal-footer">     
+                            <?php
+                                
+                              if($id_type != $producttype){
+                                ?>
+
+                                    <a type="button" href="deletetype.php?id=<?php echo $id_type?>&<?php rawurldecode('redirectUrl=edit.php?id='.$id_product) ?>" class="btn btn-primary button-modal-type">Confirmar</a></td>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <?php
+                              }
+                              else{
+                                ?>
+                                    <a type="button" href="deletetype.php?id=<?php echo $id_type?>&<?php rawurldecode('redirectUrl=edit.php?id='.$id_product) ?>" class="btn btn-primary button-modal-type" onclick="return confirm('Ainda existem produtos desse tipo!')">Confirmar</a></td>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                
+                                    
+
+                               <?php 
+                              }
+                
+                
+                
+                                
+                            ?>
+                            
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -299,11 +390,13 @@
                         </div>
                         <div class="modal-body">
                             <h3 class="modal-title fs-6">Deseja Excluir Esse Registro? </h3>
-                            <!-- POP UP SIMPLES <a href="excluir.php" onclick="return confirm('Deseja excluir esse registro ?')">Excluir</a> -->
+                             <!-- POP UP SIMPLES <a href="excluir.php" onclick="return confirm('Deseja excluir esse registro ?')">Excluir</a> -->
                         </div>
 
                         <div class="modal-footer">
-                            <a type="button" href="deleteproduct.php?id=<?php echo $id_product ?>" class="btn btn-primary button-modal-type">Confirmar</a></td>
+
+
+                            <a type="button"   href="deleteproduct.php?id=<?php echo $id_product ?>" class="btn btn-primary button-modal-type" >Confirmar</a></td>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         </div>
                     </div>
@@ -320,10 +413,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
-    <footer class="bg-dark text-center text-white">
-        <!-- Grid container -->
-        <!-- Grid container -->
+  
+
+    <footer class="">
+        <h6 class="text-footer"> © 2023 Allbytes Tecnologia. Todos os direitos reservados. </h6>
     </footer>
+ 
 
 
 </body>
