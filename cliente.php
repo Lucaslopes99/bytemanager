@@ -54,7 +54,7 @@
 
     <header>
         <nav id="" class="navbar bg- nav-color">
-            <div class="mr-sm-2 mt-4 ">
+            <div class="mr-sm-2 mt-2 ">
                 <a href="index.php"><img class="byte-img" src="img/byte.png" alt="..."></a>
                 <a type="button" href="estoque2.php" class="btn btn-outline-info my-2 my-sm-0 ml-5">Estoque</a>
 
@@ -144,6 +144,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Cliente</th>
                             <th scope="col">CNPJ</th>
+                            <th scope="col">Telefone</th>
                             <th scope="col">Operação</th>
                         </tr>                   
                     </thead>
@@ -163,11 +164,13 @@
                         <tr>                           
                             <td><?php echo $i ?></td>
                             <td><?php echo $cli_name ?></td>
-                            <td><?php echo $cnpj ?></td>                         
+                            <td><?php echo $cnpj ?></td>    
+                            <td>(18) 3221-5526</td>                       
                             <td>
-                                <a type="button" href="edit.php?id=<?php echo $id_cliente ?>" class="btn btn-success">Edit</a>
-                                <a type="button" data-bs-toggle="modal" data-bs-target="#confirmDeleteClienteModal" href="deletecliente.php?id=<?php echo $id_cliente ?>" class="btn btn-danger button-">Delete</a>
+                                <a type="button" title="Editar cliente" href="editcliente.php?id=<?php echo $id_cliente ?>"><img src="img/edit.png" class="edit-icon"> </a>
+                                <a type="button" class="delete-icon" title="Deletar cliente" data-bs-toggle="modal" data-bs-target="#confirmDeleteClienteModal" href="editcliente.php?id=<?php echo $id_cliente ?>"><img src="img/delete.png" class="delete-icon"> </a>
                             </td>
+                            
                         </tr>
 
                     </tbody>
@@ -198,7 +201,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="confirmDeleteClienteModalLabel">Excluir Produto</h1>
+                            <h1 class="modal-title fs-5" id="confirmDeleteClienteModalLabel">Excluir Cliente</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -226,13 +229,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
-    <!-- FOOTER 
+    
 
     <footer class="">
         <h6 class="text-footer"> © 2023 Allbytes Tecnologia. Todos os direitos reservados. </h6>
     </footer>
         
-    -->
+    
 
 </body>
 

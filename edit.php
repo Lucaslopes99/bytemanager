@@ -61,7 +61,7 @@
     <!--HTMLCode-->
     <header>
         <nav id="" class="navbar bg-dark nav-color">
-            <div class="mr-sm-2 mt-4 ">
+            <div class="mr-sm-2 mt-2 ">
                 <a href="index.php"><img class="byte-img" src="img/byte.png" alt="..."></a>
                 <a type="button" href="estoque2.php" class="btn btn-outline-info my-2 my-sm-0 ml-5">Estoque</a>
 

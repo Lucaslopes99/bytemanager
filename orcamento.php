@@ -62,7 +62,7 @@
 
     <header>
         <nav id="" class="navbar bg-dark nav-color">
-            <div class="mr-sm-2 mt-4 ">
+            <div class="mr-sm-2 mt-2 ">
                 <a href="index.php"><img class="byte-img" src="img/byte.png" alt="..."></a>
                 <a type="button" href="estoque2.php" class="btn btn-outline-info my-2 my-sm-0 ml-5">Estoque</a>
 
@@ -340,11 +340,13 @@
 
                                 <hr class="">
                                 <div class="">
-                                    <button type="button" class="btn btn-secondary dropdown-toggle col-12" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-                                        Ver mais...
+                                
+                                <img src="img/down-arrow.png" type="button" class="dropdown-icon" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" title="Ver mais...">
+
+                                     
                                     </button>
-                                    <div class="dropdown">
-                                        <form class="dropdown-menu p-4 col-md-12">
+                                    <div class="dropdown ">
+                                        <form class="dropdown-menu p-4 col-md-12 ">
                                             <div class="mb-3">
                                                 <div class="form-check">
                                                     <span class="fw-medium">Cliente: </span> <span class="fw-normal"> <?php echo "$cliente" ?> </span> <br>

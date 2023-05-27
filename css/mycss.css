@@ -22,7 +22,7 @@ footer{
     height: 2.5rem;
     background-image: linear-gradient(rgb(39, 40, 44), rgb(5, 4, 17));
     color: white;
-    box-shadow: 3px 10px 70px #53585c;
+    box-shadow: 3px 10px 70px #3c7fb6;
     text-align: center;
     
     
@@ -339,6 +339,17 @@ footer{
     top: 39%;
 }
 
+.dropdown-orcamento{
+    display:flex;
+    
+}
+
+.dropdown-icon{
+    width: 40px;
+    height: 40px;
+   
+    left: 50%;
+}
 
 
 /*------------------------------------*\
@@ -348,4 +359,16 @@ footer{
 
 .cliente-input-cnpj{
     width: 75%;
+}
+
+.delete-icon{
+    width: 40px;
+    height: 40px;
+    left: 7%;
+    position: relative;
+}
+
+.edit-icon{
+    width: 40px;
+    height: 40px;
 }

@@ -75,7 +75,7 @@
 
     <header>
         <nav id="" class="navbar bg-dark nav-color">
-            <div class="mr-sm-2 mt-4 ">
+            <div class="mr-sm-2 mt-2  ">
                 <a href="index.php"><img class="byte-img" src="img/byte.png" alt="..."></a>
                 <a type="button" href="estoque2.php" class="btn btn-outline-info my-2 my-sm-0 ml-5">Estoque</a>
 
@@ -214,7 +214,7 @@
                                                 <td><?php echo $row['type']; ?></td>
                                                 <td><a type="button" data-bs-toggle="modal" data-bs-target="#confirmDeleteTypeModal" href="deletetype.php?id=<?php echo $id_type ?>" class="btn btn-danger button-modal-type">Delete</a></td>
 
-                                           
+
                                             </tr>
                                         <?php
                                         }
@@ -265,7 +265,7 @@
                 $imageName = $row['image_name'];
                 $producttype = $row['type_product_id_type'];
 
-              
+
 
 
 
@@ -299,8 +299,8 @@
 
                                     <div class="formatbtn col">
                                         <div class="text-right">
-                                            <a type="button" href="edit.php?id=<?php echo $id_product ?>" class="btn btn-success">Edit</a>
-                                            <a type="button" data-bs-toggle="modal" data-bs-target="#confirmDeleteProductModal" href="deleteproduct.php?id=<?php echo $id_product ?>" class="btn btn-danger button-">Delete</a>
+                                            <a type="button" title="Editar produto" href="edit.php?id=<?php echo $id_product ?>"><img src="img/edit.png" class="edit-icon"> </a>
+                                            <a type="button" class="delete-icon" title="Deletar produto" data-bs-toggle="modal" data-bs-target="#confirmDeleteProductModal" href="editcliente.php?id=<?php echo $id_product ?>"><img src="img/delete.png" class="delete-icon"> </a>
                                         </div>
                                     </div>
                                 </div>
@@ -349,31 +349,30 @@
                             <!-- POP UP SIMPLES <a href="excluir.php" onclick="return confirm('Deseja excluir esse registro ?')">Excluir</a> -->
                         </div>
 
-                        <div class="modal-footer">     
+                        <div class="modal-footer">
                             <?php
-                                
-                              if($id_type != $producttype){
-                                ?>
 
-                                    <a type="button" href="deletetype.php?id=<?php echo $id_type?>&<?php rawurldecode('redirectUrl=edit.php?id='.$id_product) ?>" class="btn btn-primary button-modal-type">Confirmar</a></td>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <?php
-                              }
-                              else{
-                                ?>
-                                    <a type="button" href="deletetype.php?id=<?php echo $id_type?>&<?php rawurldecode('redirectUrl=edit.php?id='.$id_product) ?>" class="btn btn-primary button-modal-type" onclick="return confirm('Ainda existem produtos desse tipo!')">Confirmar</a></td>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                
-                                    
-
-                               <?php 
-                              }
-                
-                
-                
-                                
+                            if ($id_type != $producttype) {
                             ?>
-                            
+
+                                <a type="button" href="deletetype.php?id=<?php echo $id_type ?>&<?php rawurldecode('redirectUrl=edit.php?id=' . $id_product) ?>" class="btn btn-primary button-modal-type">Confirmar</a></td>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <?php
+                            } else {
+                            ?>
+                                <a type="button" href="deletetype.php?id=<?php echo $id_type ?>&<?php rawurldecode('redirectUrl=edit.php?id=' . $id_product) ?>" class="btn btn-primary button-modal-type" onclick="return confirm('Ainda existem produtos desse tipo!')">Confirmar</a></td>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+
+
+                            <?php
+                            }
+
+
+
+
+                            ?>
+
                         </div>
 
                     </div>
@@ -390,13 +389,13 @@
                         </div>
                         <div class="modal-body">
                             <h3 class="modal-title fs-6">Deseja Excluir Esse Registro? </h3>
-                             <!-- POP UP SIMPLES <a href="excluir.php" onclick="return confirm('Deseja excluir esse registro ?')">Excluir</a> -->
+                            <!-- POP UP SIMPLES <a href="excluir.php" onclick="return confirm('Deseja excluir esse registro ?')">Excluir</a> -->
                         </div>
 
                         <div class="modal-footer">
 
 
-                            <a type="button"   href="deleteproduct.php?id=<?php echo $id_product ?>" class="btn btn-primary button-modal-type" >Confirmar</a></td>
+                            <a type="button" href="deleteproduct.php?id=<?php echo $id_product ?>" class="btn btn-primary button-modal-type">Confirmar</a></td>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         </div>
                     </div>
@@ -413,12 +412,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
-  
+
 
     <footer class="">
         <h6 class="text-footer"> © 2023 Allbytes Tecnologia. Todos os direitos reservados. </h6>
     </footer>
- 
+
 
 
 </body>

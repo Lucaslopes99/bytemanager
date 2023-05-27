@@ -16,7 +16,7 @@ include "config.php";
 
      $sqlSuccess = false;
 
-     // Update carregar uma imagem, mantendo a atual
+     // Update sem carregar uma imagem, mantendo a atual
 
      if($filenamec == null){
         $sqlUpdateProductNoImage = "UPDATE product SET name_product ='$name', price_product = '$price', quantity = '$quantity', type_product_id_type = '$id_type' WHERE id_product = $id_product ";
