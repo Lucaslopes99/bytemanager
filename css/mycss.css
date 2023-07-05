@@ -90,23 +90,27 @@ footer{
 .byte-img {
    width: 250px;
    height: 44px;
- 
-
+   align-items: center;
    
 }
 
 
 .nav-color {
-    padding: 8px;
+    padding: 10px;
     box-shadow: 3px 10px 70px #31a1d4;
     background-image: linear-gradient(rgb(15, 62, 131), rgb(24, 25, 26));
+    
+
     
     
 
 }
 
+
 .nav-button {
     margin-left: 10em;
+ 
+    
 }
 
 
@@ -143,6 +147,22 @@ footer{
 	Cards-estoque
 \*------------------------------------*/
 
+.delete-icon-estoque{
+    width: 35px;
+    height: 35px;
+    
+}
+
+.edit-icon-estoque{
+    width: 35px;
+    height: 35px;
+
+}
+
+.buttons-estoque{
+    text-align: end;
+}
+
 
 .formatid{
     margin-left: 15px;
@@ -176,6 +196,7 @@ footer{
 .formatbtn{
     top: 80%;
     right: 15%;
+ 
 }
 
 .input-type-estoque{
@@ -238,7 +259,7 @@ footer{
     height: 37px;
     position: absolute;
     left: 82%;
-    top: 47%;
+    top: 58.5%;
     background-color: #007bff;
     border: none;
     color: white;
@@ -282,18 +303,62 @@ footer{
 	Orcamento
 \*------------------------------------*/
 
+.btn-confirm-orcamento {
+      position: absolute;
+      left: 94%;
+      top: 5%;
+      width: 35px;
+      height: 35px;
+     
+       
+}
+
+
+
+.btn-effect {
+    font-family: 'Roboto', sans-serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      font-weight: 500;
+      color: #000;
+      background-color: #fff;
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease 0s;
+      cursor: pointer;
+      outline: none;
+}
+
+.btn-effect:hover {
+    
+    transform: translateY(-5px);
+    box-shadow: 5px 10px 20px rgba(69, 94, 94, 0.4);
+
+  }
+
+
+
+
+
+
 .btn-orcamento{
-    
-    
+    width: 90%;
     position: absolute;
 }
 
 .orcamento-input-add{
-    width: 90%;    
-    
-   
+    width: 90%;      
     
 }
+
+.orcamento-input-price {
+    width: 40%;
+    margin-top: 10px;
+    
+}
+
 
 .orcamento-product-add-icon{
 
@@ -346,9 +411,16 @@ footer{
 
 .dropdown-icon{
     width: 40px;
-    height: 40px;
-   
+    height: 40px;   
     left: 50%;
+}
+
+.bg-aproved {
+    background-color: #d7f7d1;
+}
+
+.bg-reproved {
+    background-color: #fcb9b5;
 }
 
 
@@ -362,13 +434,15 @@ footer{
 }
 
 .delete-icon{
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     left: 7%;
     position: relative;
 }
 
 .edit-icon{
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
+    left: 10px;
+    position: relative;
 }

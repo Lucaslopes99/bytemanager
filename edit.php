@@ -59,27 +59,28 @@
     ?>
 
     <!--HTMLCode-->
+    
     <header>
-        <nav id="" class="navbar bg-dark nav-color">
-            <div class="mr-sm-2 mt-2 ">
+        <nav id="" class="navbar nav-color">
+            <div class="mr-sm-2  ">
                 <a href="index.php"><img class="byte-img" src="img/byte.png" alt="..."></a>
-                <a type="button" href="estoque2.php" class="btn btn-outline-info my-2 my-sm-0 ml-5">Estoque</a>
+                <a type="button" href="estoque2.php" class="btn btn-primary my-2 my-sm-0 ml-5">Estoque</a>
 
                 <div class="btn-group ml-3">
-                    <button type="button" class="btn btn-outline-info  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button type="button" class="btn btn-primary  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         Orçamentos
                     </button>
-                    <ul class="dropdown-menu dropdown-menu">
-                        <li><a class="dropdown-item" href="orcamento.php">Aguardando</a></li>
+                    <ul class="dropdown-menu ">
+                        <li><a class="dropdown-item" href="orcamento.php">Pendente</a></li>
                         <li><a class="dropdown-item" href="orcado.php">Orçados</a></li>
-                        <li><a class="dropdown-item" href="orcamento.php">Aprovados</a></li>
+                        <li><a class="dropdown-item" href="aprovado.php">Aprovados</a></li>
+                        <li><a class="dropdown-item" href="reprovado.php">Reprovados</a></li>
                     </ul>
 
                 </div>
-                <a type="button" href="cliente.php" class="btn btn-outline-info  my-2 my-sm-0 ml-3">Clientes</a>
+                <a type="button" href="cliente.php" class="btn btn-primary  my-2 my-sm-0 ml-3">Clientes</a>
             </div>
         </nav>
-
     </header>
 
     <main class="container">
@@ -100,23 +101,29 @@
                     <input type="hidden" name="id_product" value="<?php echo $rowProduct['id_product']; ?>">
                     <div class="form-group format mx-auto inputbox">
                         <div class=" ">
+                        <label for="inputState" class=" form-label fw-medium " >Produto</label>
                             <input required type="text" class="form-control mx-auto" name="name_product" placeholder="Nome produto" required value="<?php echo $rowProduct['name_product']; ?>">
                         </div>
                     </div>
 
                     <div class="form-group format mx-auto inputbox">
                         <div class="">
+                        <label for="inputState" class=" form-label fw-medium">Preço produto</label>
                             <input required type="text" class="form-control mx-auto" name="price_product" placeholder="Preço" required value="<?php echo $rowProduct['price_product']; ?>">
                         </div>
                     </div>
 
                     <div class="form-group format mx-auto inputbox">
                         <div class="">
-                            <input required type="text" class="form-control mx-auto" name="quantity" placeholder="Quantidade" required value="<?php echo $rowProduct['quantity']; ?>">
+                        <label for="inputState" class=" form-label fw-medium">Quantidade</label>
+                        <input required type="text" class="form-control mx-auto" name="quantity" placeholder="Quantidade" required value="<?php echo $rowProduct['quantity']; ?>">
                         </div>
                     </div>
 
-                    <div class="form-group format mx-auto inputbox">
+                    
+
+                    <div class="form-group format mx-auto inputbox ">
+                    <label for="inputState" class=" form-label fw-medium">Tipo</label>
                         <select required type="text" class="form-control mx-auto input-type-estoque" name="id_type" value="<?php echo $rowProduct['type_product_id_type']; ?>">
 
                             <?php
@@ -143,7 +150,7 @@
 
 
                     <div class="form-group format mx-auto inputbox mt-5">
-                        <label for="inputState" class=" col-form-label mx-auto">Foto produto</label>
+                        <label for="inputState" class=" col-form-label mx-auto fw-medium">Foto produto</label>
                         <div class="">
                             <input class="form-control" type="file" name="candidateimg" />
 
@@ -241,31 +248,15 @@
                         </div>
 
                         <div class="modal-footer">     
-                            <?php
-                              if($id_type != $producttype){
-                                ?>
-
                                     <a type="button" href="deletetype.php?id=<?php echo $id_type?>&<?php rawurldecode('redirectUrl=edit.php?id='.$id_product) ?>" class="btn btn-primary button-modal-type">Confirmar</a></td>
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <?php
-                              }
-                              else{
-                                ?>
-                                    <a type="button" href="deletetype.php?id=<?php echo $id_type?>&<?php rawurldecode('redirectUrl=edit.php?id='.$id_product) ?>" class="btn btn-primary button-modal-type" onclick="return confirm('Ainda existem produtos desse tipo!')">Confirmar</a></td>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                
-                                    
 
-                               <?php 
-                              }
-                
-                
-                            ?>
                         </div>
 
                     </div>
                 </div>
-
+       </div>
+       
         
 
 

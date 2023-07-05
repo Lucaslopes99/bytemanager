@@ -30,39 +30,31 @@
     $clientes = mysqli_query($conn, $sqlGetClientes);
     $rowCliente = mysqli_fetch_assoc($clientes);
 
-
-
-
-
-
-
-
-
-
     ?>
 
     <!--HTMLCode-->
+    
     <header>
-        <nav id="" class="navbar bg-dark nav-color">
-            <div class="mr-sm-2 mt-2 ">
+        <nav id="" class="navbar nav-color">
+            <div class="mr-sm-2  ">
                 <a href="index.php"><img class="byte-img" src="img/byte.png" alt="..."></a>
-                <a type="button" href="estoque2.php" class="btn btn-outline-info my-2 my-sm-0 ml-5">Estoque</a>
+                <a type="button" href="estoque2.php" class="btn btn-primary my-2 my-sm-0 ml-5">Estoque</a>
 
                 <div class="btn-group ml-3">
-                    <button type="button" class="btn btn-outline-info  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button type="button" class="btn btn-primary  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         Orçamentos
                     </button>
-                    <ul class="dropdown-menu dropdown-menu">
-                        <li><a class="dropdown-item" href="orcamento.php">Aguardando</a></li>
+                    <ul class="dropdown-menu ">
+                        <li><a class="dropdown-item" href="orcamento.php">Pendente</a></li>
                         <li><a class="dropdown-item" href="orcado.php">Orçados</a></li>
-                        <li><a class="dropdown-item" href="orcamento.php">Aprovados</a></li>
+                        <li><a class="dropdown-item" href="aprovado.php">Aprovados</a></li>
+                        <li><a class="dropdown-item" href="reprovado.php">Reprovados</a></li>
                     </ul>
 
                 </div>
-                <a type="button" href="cliente.php" class="btn btn-outline-info  my-2 my-sm-0 ml-3">Clientes</a>
+                <a type="button" href="cliente.php" class="btn btn-primary  my-2 my-sm-0 ml-3">Clientes</a>
             </div>
         </nav>
-
     </header>
 
     <main class="container">
@@ -71,24 +63,30 @@
             <div class="overlay"></div>
 
         </div>
+        
 
         <div class="card text-center add-estoque">
 
 
-            <div class="card-body">
+            <div class="card-body  ">
                 <h5 class="card-title">Editar cliente</h5>
+
+                
 
 
                 <form action="updatecliente.php" method="POST" enctype="multipart/form-data" class="mx-md-5">
                     <input type="hidden" name="id_cliente" value="<?php echo $rowCliente['id_cliente']; ?>">
                     <div class="form-group format mx-auto inputbox">
                         <div class=" ">
+                        <label for="inputState" class=" form-label fw-medium" >Cliente</label>
                             <input required type="text" class="form-control mx-auto" name="cli_name" placeholder="Nome cliente" required value="<?php echo $rowCliente['cli_name']; ?>">
                         </div>
                     </div>
+                    
 
                     <div class="form-group format mx-auto inputbox">
                         <div class="">
+                        <label for="inputState" class=" form-label fw-medium" >CNPJ</label>
                             <input required type="text" class="form-control mx-auto" name="cnpj" placeholder="CNPJ" required value="<?php echo $rowCliente['cnpj']; ?>">
                         </div>
                     </div>

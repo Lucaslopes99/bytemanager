@@ -357,38 +357,35 @@
 
             <div>
                 <form class="input-group" method="POST">
-                    <input type="text" class="form-control mt-3" placeholder="Pesquisar orçados" name="search">
+                    <input type="text" class="form-control mt-3" placeholder="Pesquisar orçamentos aprovados" name="search">
 
                     <button type="submit" href="estoque.php" class="btn btn-primary formatButtonSearch teste ml-1">Confirm</button>
                 </form>
             </div>
-
-
-            <?php ?>
+        
+        
             <?php while ($row = mysqli_fetch_assoc($orcamentos)) {
                 $id_orcamento = $row['id_orcamento'];
-                $id_product = $row['id_product'];
                 $name = $row['name'];
                 $descricao = $row['descricao'];
                 $product = $row['name_product'];
                 $cliente = $row['cli_name'];
                 $preco = $row['preco'];
                 $status = $row['status'];
-                $quantity = $row['quantity'];
 
             ?>
 
 
 
-                <?php if ($preco != null && $status == null) : ?>
+                <?php if ($status == 0 && $preco != null) : ?>
 
                     <div class="card mb-3">
                         <div class="row g-0">
                             <div class="col-md-12">
-                                <div class="card-body">
+                                <div class="card-body ">
                                     <div class="row ">
                                         <div class="mt-2 col btn-orcamento">
-                                            <h5> <?php echo "$name" ?>
+                                            <h5> <?php echo $name ?>
                                                 <!-- Quantidade em estoque < ?php echo "$id_candidates" ?> -->
 
                                             </h5>
@@ -396,78 +393,9 @@
 
                                         <div class="formatbtn ">
                                             <div class="text-right">
-                                                <a type="button" class="mr-3" title="Aprovar" data-bs-toggle="modal" data-bs-target="#confirmAprovacaoModal<?php echo $id_orcamento ?>"><img src="img/aprove.png" class="edit-icon-estoque btn-effect"></a>
-                                                <a type="button" class="mr-3" title="Desaprovar" data-bs-toggle="modal" data-bs-target="#confirmReprovacaoModal<?php echo $id_orcamento ?>"><img src="img/desaprove.png" class="edit-icon-estoque btn-effect"></a>
+                                            <a type="button" title="Aprovado"><img src="img/cross.png" class="btn-confirm-orcamento"></a>
                                             </div>
                                         </div>
-
-
-                                        <form action="updateaprovacao.php" method="POST" enctype="multipart/form-data" class="mx-md-5">
-                                            <input type="hidden" name="id_orcamento" value="<?php echo $id_orcamento ?>"></input>
-                                            <input type="hidden" name="id_product" value="<?php echo $id_product ?>"></input>
-                                            <input required type="hidden" class="form-control mx-auto" name="quantity" required value="<?php echo $row['quantity']; ?>">
-                                            
-                                            <!-- Modal Confirm Aprovação-->
-                                            <div class="modal fade" id="confirmAprovacaoModal<?php echo $id_orcamento ?>" tabindex="-1" aria-labelledby="confirmApovacaoLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="confirmAprovacaoLabel">Aprovar Orçamento</h1>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <h3 class="modal-title fs-6">Deseja Aprovar esse Orçamento ?</h3>
-
-                                                            <!-- POP UP SIMPLES <a href="excluir.php" onclick="return confirm('Deseja excluir esse registro ?')">Excluir</a> -->
-                                                        </div>
-
-                                                        <div class="modal-footer">
-
-                                                            <button type="submit" name="aprovar<?php echo $id_orcamento ?>" class="btn btn-primary">Confirmar</button>
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-
-
-                                                        </div>
-
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </form>
-
-                                        <form  action="updateaprovacao.php" method="POST" enctype="multipart/form-data" class="mx-md-5">
-                                            <input type="hidden" name="id_orcamento" value="<?php echo $id_orcamento ?>"></input>                                      
-                                            <!-- Modal Confirm Aprovação-->
-                                            <div class="modal fade" id="confirmReprovacaoModal<?php echo $id_orcamento ?>" tabindex="-1" aria-labelledby="confirmRepovacaoLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="confirmReprovacaoLabel">Reprovar Orçamento</h1>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <h3 class="modal-title fs-6">Deseja Reprovar esse Orçamento ?</h3>
-
-                                                            <!-- POP UP SIMPLES <a href="excluir.php" onclick="return confirm('Deseja excluir esse registro ?')">Excluir</a> -->
-                                                        </div>
-
-                                                        <div class="modal-footer">
-
-                                                            <button type="submit" name="reprovar<?php echo $id_orcamento ?>" class="btn btn-primary">Confirmar</button>
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-
-
-                                                        </div>
-
-
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </form>
-
-                                      
 
 
                                     </div>
@@ -481,7 +409,7 @@
                                         <br>
                                         <br>
                                         <div class="collapse" id="verMais<?php echo $id_orcamento ?>">
-                                            <div class="card card-body border border-primary">
+                                            <div class="card card-body border border-danger">
                                                 <div class="form-check">
 
                                                     <span class="fw-medium">Cliente: </span> <span class="fw-normal"> <?php echo "$cliente" ?> </span> <br>

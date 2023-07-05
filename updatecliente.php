@@ -19,7 +19,7 @@ include "config.php";
   
    
 
-    // Checa se o update foi realizado com sucesso, seja feito com ou sem alteração da imagem
+    // Checa se o update foi realizado com sucesso
     if ($sqlSuccess == true) {
         header("Location: /bytemanager/cliente.php");
     }

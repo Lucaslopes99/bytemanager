@@ -30,18 +30,23 @@
 
 
     // List all Products, types and search for the name
-    $sqlGetALLProducts = "SELECT * 
+    $sqlGetALLProducts = "SELECT DISTINCT pro.id_product, pro.name_product, pro.price_product, pro.quantity, pro.type_product_id_type,
+                                          pro.image_name, tp.id_type, tp.type, orca.product_id_product
         FROM product AS pro
         INNER JOIN type_product AS tp ON tp.id_type = pro.type_product_id_type
+        LEFT JOIN orcamento AS orca ON pro.id_product = orca.product_id_product
         WHERE pro.name_product LIKE '%$search%'";
+
     $products = mysqli_query($conn, $sqlGetALLProducts);
 
-    // List all types on add product page
+    // Lista todos os tipos no select para adicionar um produto
     $sqlGetAllProductTypes = "SELECT * FROM type_product ";
     $productTypes = mysqli_query($conn, $sqlGetAllProductTypes);
 
-    // List all types on add type from edit page
-    $sqlShowAllTypes = "SELECT * FROM type_product";
+    // Lista todos os tipos no modal add/delete type
+    $sqlShowAllTypes = "SELECT DISTINCT tp.id_type, tp.type, pro.type_product_id_type 
+    FROM type_product AS tp
+    LEFT JOIN product AS pro ON pro.type_product_id_type = tp.id_type";
     $sqlAllTypes = mysqli_query($conn, $sqlShowAllTypes);
 
     // Paginação estoque GPT ______________________________________________________________________________
@@ -74,23 +79,24 @@
     <!---codigo html-->
 
     <header>
-        <nav id="" class="navbar bg-dark nav-color">
-            <div class="mr-sm-2 mt-2  ">
+        <nav id="" class="navbar nav-color">
+            <div class="mr-sm-2  ">
                 <a href="index.php"><img class="byte-img" src="img/byte.png" alt="..."></a>
-                <a type="button" href="estoque2.php" class="btn btn-outline-info my-2 my-sm-0 ml-5">Estoque</a>
+                <a type="button" href="estoque2.php" class="btn btn-primary my-2 my-sm-0 ml-5">Estoque</a>
 
                 <div class="btn-group ml-3">
-                    <button type="button" class="btn btn-outline-info  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button type="button" class="btn btn-primary  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         Orçamentos
                     </button>
-                    <ul class="dropdown-menu dropdown-menu">
-                        <li><a class="dropdown-item" href="orcamento.php">Aguardando</a></li>
+                    <ul class="dropdown-menu ">
+                        <li><a class="dropdown-item" href="orcamento.php">Pendente</a></li>
                         <li><a class="dropdown-item" href="orcado.php">Orçados</a></li>
-                        <li><a class="dropdown-item" href="orcamento.php">Aprovados</a></li>
+                        <li><a class="dropdown-item" href="aprovado.php">Aprovados</a></li>
+                        <li><a class="dropdown-item" href="reprovado.php">Reprovados</a></li>
                     </ul>
 
                 </div>
-                <a type="button" href="cliente.php" class="btn btn-outline-info  my-2 my-sm-0 ml-3">Clientes</a>
+                <a type="button" href="cliente.php" class="btn btn-primary  my-2 my-sm-0 ml-3">Clientes</a>
             </div>
         </nav>
     </header>
@@ -99,14 +105,16 @@
 
     <a href="addestoque.php" data-bs-toggle="modal" data-bs-target="#addEstoqueModal"><img src="img/addestoque.png" class="add-icon-estoque"> </a>
 
-    <!-- Modal Add Product -->
+    <!-- [[ Modal Add Product ]] -->
 
     <div class="modal fade modal-dialog modal-lg" id="addEstoqueModal" tabindex="-1" aria-labelledby="addEstoqueModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="addEstoqueModalLabel">Adicionar item Ao Estoque</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+
+                    </button>
                 </div>
                 <div class="modal-body">
 
@@ -175,13 +183,17 @@
 
                     </form>
                 </div>
+
+
+
             </div>
         </div>
     </div>
 
-    <!-- END Modal Add Product-->
+    <!-- [[ END Modal Add Product ]] -->
 
-    <!-- Modal Add Type-->
+
+    <!-- [[ Modal Add Type ]]-->
 
     <div class="modal fade" id="addTypeModal" tabindex="-1" aria-labelledby="addTypeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -208,17 +220,19 @@
                                         $i = 0;
                                         while ($row = $sqlAllTypes->fetch_assoc()) {
                                             $i++;
+                                            $id_type = $row['id_type'];
+
                                         ?>
+
+
                                             <tr>
-                                                <th scope="row"><?php echo $i; ?></th>
+                                                <th scope="row"><?php echo $i; ?> </th>
                                                 <td><?php echo $row['type']; ?></td>
-                                                <td><a type="button" data-bs-toggle="modal" data-bs-target="#confirmDeleteTypeModal" href="deletetype.php?id=<?php echo $id_type ?>" class="btn btn-danger button-modal-type">Delete</a></td>
-
-
+                                                <td><a type="button" data-bs-toggle="modal" data-bs-target="#confirmDeleteTypeModal" href="" class="btn btn-danger button-modal-type">Delete</a></td>
                                             </tr>
-                                        <?php
-                                        }
-                                        ?>
+
+
+                                        <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -234,7 +248,30 @@
         </div>
     </div>
 
-    <!-- END Modal Add Type-->
+
+    <!-- Modal Confirm Delete Type-->
+    <div class="modal fade" id="confirmDeleteTypeModal" tabindex="-1" aria-labelledby="confirmDeleteTypeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="confirmDeleteTypeModalLabel">Excluir Tipo</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h3 class="modal-title fs-6">Deseja Excluir Esse Tipo? </h3>
+                    <!-- POP UP SIMPLES <a href="excluir.php" onclick="return confirm('Deseja excluir esse registro ?')">Excluir</a> -->
+                </div>
+
+                <div class="modal-footer">
+                    <a type="button" href="deletetype.php?id=<?php echo $id_type ?>" class="btn btn-primary button-modal-type">Confirmar</a></td>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- END Modal Confirm Delete Type-->
 
     <main class="container mt-5">
         <div class="bg-img" style="background-image: url('./img/estoquebg.jpg');">
@@ -263,7 +300,8 @@
                 $quantity = $row['quantity'];
                 $type = $row['type'];
                 $imageName = $row['image_name'];
-                $producttype = $row['type_product_id_type'];
+                $producType = $row['type_product_id_type'];
+                $orcamentoProduct = $row['product_id_product'];
 
 
 
@@ -297,24 +335,66 @@
                                         </h5>
                                     </div>
 
-                                    <div class="formatbtn col">
-                                        <div class="text-right">
-                                            <a type="button" title="Editar produto" href="edit.php?id=<?php echo $id_product ?>"><img src="img/edit.png" class="edit-icon"> </a>
-                                            <a type="button" class="delete-icon" title="Deletar produto" data-bs-toggle="modal" data-bs-target="#confirmDeleteProductModal" href="editcliente.php?id=<?php echo $id_product ?>"><img src="img/delete.png" class="delete-icon"> </a>
+                                    <div class="buttons-estoque col">
+
+                                        <a type="button" class="mr-3" title="Editar produto" href="edit.php?id=<?php echo $id_product ?>"><img src="img/edit.png" class="edit-icon-estoque btn-effect"></a>
+                                        <a type="button" title="Deletar produto" data-bs-toggle="modal" href="" data-bs-target="#confirmDeleteProductModal<?php echo $id_product ?>"><img src="img/delete.png" class="delete-icon-estoque btn-effect"></a>
+                                    </div>
+
+                                    <!-- Modal Confirm Delete Product-->
+                                    <div class="modal fade" id="confirmDeleteProductModal<?php echo $id_product ?>" tabindex="-1" aria-labelledby="confirmDeleteProductModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="confirmDeleteProductModalLabel">Excluir Produto</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h3 class="modal-title fs-6">Deseja Excluir Esse Registro? </h3>
+                                                    <!-- POP UP SIMPLES <a href="excluir.php" onclick="return confirm('Deseja excluir esse registro ?')">Excluir</a> -->
+                                                </div>
+
+
+
+                                                <div class="modal-footer">
+                                                    <?php
+
+                                                    if ($id_product == $orcamentoProduct) {
+                                                    ?>
+                                                        <a type="button" href="deleteproduct.php?id=<?php echo "$id_product" ?>" class="btn btn-primary button-modal-type" onclick="return confirm('Ainda existem orçamentos com este produto')">Confirmar</a></td>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+                                                    <?php
+                                                    } else {
+                                                    ?>
+                                                        <a type="button" href="deleteproduct.php?id=<?php echo "$id_product" ?>" class="btn btn-primary button-modal-type">Confirmar</a></td>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    <?php
+                                                    }
+                                                    ?>
+
+
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
                                 </div>
                                 <hr class="mt-1 mb-1">
                                 <span class="fw-medium">Tipo: </span> <span class="fw-normal"> <?php echo "$type" ?> </span> <br>
                                 <span class="fw-medium">Quantidade: </span> <span class="fw-normal"> <?php echo "$quantity" ?> </span> <br>
                                 <span class="fw-medium">Preço: </span> <span class="fw-normal">R$ <?php echo "$price_product" ?> </span> <br>
+
                             </div>
                         </div>
                     </div>
                 </div>
+
             <?php
             }
             ?>
+
+
 
             <!-- Paginação -->
 
@@ -333,75 +413,6 @@
                 </ul>
             </nav>
 
-
-
-
-            <!-- Modal Confirm Delete Type-->
-            <div class="modal fade" id="confirmDeleteTypeModal" tabindex="-1" aria-labelledby="confirmDeleteTypeModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="confirmDeleteTypeModalLabel">Excluir Tipo</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <h3 class="modal-title fs-6">Deseja Excluir Esse Tipo? </h3>
-                            <!-- POP UP SIMPLES <a href="excluir.php" onclick="return confirm('Deseja excluir esse registro ?')">Excluir</a> -->
-                        </div>
-
-                        <div class="modal-footer">
-                            <?php
-
-                            if ($id_type != $producttype) {
-                            ?>
-
-                                <a type="button" href="deletetype.php?id=<?php echo $id_type ?>&<?php rawurldecode('redirectUrl=edit.php?id=' . $id_product) ?>" class="btn btn-primary button-modal-type">Confirmar</a></td>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <?php
-                            } else {
-                            ?>
-                                <a type="button" href="deletetype.php?id=<?php echo $id_type ?>&<?php rawurldecode('redirectUrl=edit.php?id=' . $id_product) ?>" class="btn btn-primary button-modal-type" onclick="return confirm('Ainda existem produtos desse tipo!')">Confirmar</a></td>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-
-
-
-                            <?php
-                            }
-
-
-
-
-                            ?>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal Confirm Delete Product-->
-            <div class="modal fade" id="confirmDeleteProductModal" tabindex="-1" aria-labelledby="confirmDeleteProductModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="confirmDeleteProductModalLabel">Excluir Produto</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <h3 class="modal-title fs-6">Deseja Excluir Esse Registro? </h3>
-                            <!-- POP UP SIMPLES <a href="excluir.php" onclick="return confirm('Deseja excluir esse registro ?')">Excluir</a> -->
-                        </div>
-
-                        <div class="modal-footer">
-
-
-                            <a type="button" href="deleteproduct.php?id=<?php echo $id_product ?>" class="btn btn-primary button-modal-type">Confirmar</a></td>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </main>
     </main>
 
@@ -409,16 +420,15 @@
     <!-- Importando o jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <!-- Importando o js do bootstrap -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-
-
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Footer
+                        
     <footer class="">
         <h6 class="text-footer"> © 2023 Allbytes Tecnologia. Todos os direitos reservados. </h6>
     </footer>
 
-
+    -->
 
 </body>
 

@@ -29,16 +29,17 @@
     include "config.php";
 
 
-    // List clientes  INNER JOIN orcamento AS orca ON orca.cliente_id_cliente = cli.id_cliente 
-    
-    $sqlGetAllClientes = "SELECT * 
+    // Lista todos os clientes e compara com a fk de orçamento para ver se tem orçamento com esse cliente. O distinct faz apenas um registro único ser retornado caso tenham repetidos
+
+    $sqlGetAllClientes = "SELECT DISTINCT cli.id_cliente, cli.cli_name, cli.cnpj, orca.cliente_id_cliente
         FROM cliente AS cli 
+        LEFT JOIN orcamento AS orca ON cli.id_cliente = orca.cliente_id_cliente
         WHERE cli_name LIKE '%$search%'";
     $clientes = mysqli_query($conn, $sqlGetAllClientes);
 
-    // List all products on add orcamento page
-    $sqlGetAllProducts = "SELECT * FROM product ";
-    $productOrcamentos = mysqli_query($conn, $sqlGetAllProducts);
+    // Lista todos os orcamentos e vê se tem algum cliente sendo usado
+    $sqlClientesOrcamentos = "SELECT * FROM orcamento ";
+    $orcamentos = mysqli_query($conn, $sqlClientesOrcamentos);
 
     // List all types on add product page
     $sqlGetAllProductTypes = "SELECT * FROM type_product ";
@@ -52,24 +53,26 @@
 
     <!--- NAV BAR-->
 
+    
     <header>
-        <nav id="" class="navbar bg- nav-color">
-            <div class="mr-sm-2 mt-2 ">
+        <nav id="" class="navbar nav-color">
+            <div class="mr-sm-2  ">
                 <a href="index.php"><img class="byte-img" src="img/byte.png" alt="..."></a>
-                <a type="button" href="estoque2.php" class="btn btn-outline-info my-2 my-sm-0 ml-5">Estoque</a>
+                <a type="button" href="estoque2.php" class="btn btn-primary my-2 my-sm-0 ml-5">Estoque</a>
 
                 <div class="btn-group ml-3">
-                    <button type="button" class="btn btn-outline-info  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button type="button" class="btn btn-primary  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         Orçamentos
                     </button>
-                    <ul class="dropdown-menu dropdown-menu">
-                        <li><a class="dropdown-item" href="orcamento.php">Aguardando</a></li>
+                    <ul class="dropdown-menu ">
+                        <li><a class="dropdown-item" href="orcamento.php">Pendente</a></li>
                         <li><a class="dropdown-item" href="orcado.php">Orçados</a></li>
-                        <li><a class="dropdown-item" href="orcamento.php">Aprovados</a></li>
+                        <li><a class="dropdown-item" href="aprovado.php">Aprovados</a></li>
+                        <li><a class="dropdown-item" href="reprovado.php">Reprovados</a></li>
                     </ul>
 
                 </div>
-                <a type="button" href="cliente.php" class="btn btn-outline-info  my-2 my-sm-0 ml-3">Clientes</a>
+                <a type="button" href="cliente.php" class="btn btn-primary  my-2 my-sm-0 ml-3">Clientes</a>
             </div>
         </nav>
     </header>
@@ -127,7 +130,7 @@
 
             <div>
                 <form class="input-group" method="POST">
-                    <input type="text" class="form-control mt-3" placeholder="Pesquisar em aguardando orçamento" name="search">
+                    <input type="text" class="form-control mt-3" placeholder="Pesquisar em clientes" name="search">
                     <button type="submit" href="estoque.php" class="btn btn-primary formatButtonSearch teste ml-1">Confirm</button>
                 </form>
             </div>
@@ -146,38 +149,78 @@
                             <th scope="col">CNPJ</th>
                             <th scope="col">Telefone</th>
                             <th scope="col">Operação</th>
-                        </tr>                   
+                        </tr>
                     </thead>
-                    <?php 
-                    
+                    <?php
+
                     $i = 0;
                     while ($row = mysqli_fetch_assoc($clientes)) {
                         $i++;
-                            $id_cliente = $row['id_cliente'];
-                            $cli_name = $row['cli_name'];
-                            $cnpj = $row['cnpj'];
-                            //$orcamento = $row['cliente_id_cliente'];
+                        $id_cliente = $row['id_cliente'];
+                        $cli_name = $row['cli_name'];
+                        $cnpj = $row['cnpj'];
+                        $cliente = $row['cliente_id_cliente'];
 
-                        ?>
+                    ?>
 
-                    <tbody>
-                        <tr>                           
-                            <td><?php echo $i ?></td>
-                            <td><?php echo $cli_name ?></td>
-                            <td><?php echo $cnpj ?></td>    
-                            <td>(18) 3221-5526</td>                       
-                            <td>
-                                <a type="button" title="Editar cliente" href="editcliente.php?id=<?php echo $id_cliente ?>"><img src="img/edit.png" class="edit-icon"> </a>
-                                <a type="button" class="delete-icon" title="Deletar cliente" data-bs-toggle="modal" data-bs-target="#confirmDeleteClienteModal" href="editcliente.php?id=<?php echo $id_cliente ?>"><img src="img/delete.png" class="delete-icon"> </a>
-                            </td>
-                            
-                        </tr>
+                        <tbody>
+                            <tr>
+                                <td><?php echo $i ?></td>
+                                <td><?php echo $cli_name ?></td>
+                                <td><?php echo $cnpj ?></td>
+                                <td>(18) 3221-5526</td>
+                                <td>
+                                    <a type="button" title="Editar cliente" href="editcliente.php?id=<?php echo $id_cliente ?>"><img src="img/edit.png" class="edit-icon btn-effect"> </a>
+                                    <a type="button" class="delete-icon" title="Deletar cliente" data-bs-toggle="modal" data-bs-target="#confirmDeleteClienteModal<?php echo $id_cliente ?>"><img src="img/delete.png" class="delete-icon btn-effect"> </a>
 
-                    </tbody>
-                     <?php
-                        }
-                     ?>
+                                </td>
+
+
+                                <!-- Modal Confirm Delete Cliente-->
+                                <div class="modal fade" id="confirmDeleteClienteModal<?php echo $id_cliente ?>" tabindex="-1" aria-labelledby="confirmDeleteClienteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="confirmDeleteClienteModalLabel">Excluir Cliente</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h3 class="modal-title fs-6">Deseja Excluir Esse Registro? </h3>
+                                                <!-- POP UP SIMPLES <a href="excluir.php" onclick="return confirm('Deseja excluir esse registro ?')">Excluir</a> -->
+                                            </div>
+
+                                            <div class="modal-footer">
+                                              
+                                                <?php
+
+                                                if ($id_cliente == $cliente) {
+                                                ?>
+                                                    <a type="button" href="" class="btn btn-primary button-modal-type" onclick="return confirm('Ainda existem orçamentos com esse cliente')">Confirmar</a></td>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                <?php
+                                                } else {
+                                                ?>
+                                                    <a type="button" href="deletecliente.php?id=<?php echo $id_cliente ?>" class="btn btn-primary button-modal-type">Confirmar</a></td>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                <?php
+                                                }
+                                                ?>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </tr>
+
+                        </tbody>
+                    <?php
+
+                    }
+                    ?>
                 </table>
+
             </div>
 
             <!-- Paginação -->
@@ -196,27 +239,7 @@
                 </ul>
             </nav>
 
-            <!-- Modal Confirm Delete Cliente-->
-            <div class="modal fade" id="confirmDeleteClienteModal" tabindex="-1" aria-labelledby="confirmDeleteClienteModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="confirmDeleteClienteModalLabel">Excluir Cliente</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <h3 class="modal-title fs-6">Deseja Excluir Esse Registro? </h3>
-                            <!-- POP UP SIMPLES <a href="excluir.php" onclick="return confirm('Deseja excluir esse registro ?')">Excluir</a> -->
-                        </div>
 
-                        <div class="modal-footer">
-                            <a type="button" href="deletecliente.php?id=<?php echo $id_cliente ?>" class="btn btn-primary button-modal-type">Confirmar</a></td>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        </div>
-                       
-                    </div>
-                </div>
-            </div>
 
         </main>
     </main>
@@ -229,13 +252,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
-    
+
+    <!--
 
     <footer class="">
         <h6 class="text-footer"> © 2023 Allbytes Tecnologia. Todos os direitos reservados. </h6>
     </footer>
-        
-    
+
+    -->
 
 </body>
 
