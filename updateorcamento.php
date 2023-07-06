@@ -13,7 +13,7 @@ if ($id_product != null) {
 $priceProduct = $_POST['priceProduct'];
 $sqlUpdateOrcamento= "UPDATE orcamento SET preco ='$priceProduct' WHERE id_orcamento = $id_orcamento ";
 $updateOrcamento = mysqli_query($conn, $sqlUpdateOrcamento);
-header("Location: /bytemanager/orcamento.php");
+header("Location: /orcamento.php");
 }
 
 // Senão, pede para informar o preço 
@@ -23,7 +23,7 @@ else{
 
     $sqlUpdateOrcamento= "UPDATE orcamento SET preco ='$price' WHERE id_orcamento = $id_orcamento ";
     $updateOrcamento = mysqli_query($conn, $sqlUpdateOrcamento);
-    header("Location: /bytemanager/orcamento.php");
+    header("Location: /orcamento.php");
 }
 
 

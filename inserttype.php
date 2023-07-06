@@ -18,11 +18,11 @@
         
       if($redirectUrl != null){
         $idproduct = mysqli_insert_id($conn);    
-        header("Location: /bytemanager/".$redirectUrl);
+        header("Location: /".$redirectUrl);
         exit();
       }
        else{
-        header("Location: /bytemanager/estoque2.php");
+        header("Location: /estoque2.php");
        }
     }
     else{

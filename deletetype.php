@@ -6,7 +6,7 @@ $sqlDeleteType = "DELETE FROM type_product WHERE id_type = $id_type";
 $result = mysqli_query($conn, $sqlDeleteType);
 
 
-header("Location: /bytemanager/estoque2.php");
+header("Location: /estoque2.php");
 exit();
 
 ?>

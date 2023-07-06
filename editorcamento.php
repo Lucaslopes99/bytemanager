@@ -29,7 +29,7 @@
     $id_orcamento = $_GET['id'] ?? '';
     $id_product = $_GET['id'] ?? '';
 
-    $sqlGetAllOrcamentos = "SELECT DISTINCT orca.id_orcamento orca.name, orca.descricao, orca.preco, orca.product_id_product, orca.cliente_id_cliente, pro.id_product, pro.name_product
+    $sqlGetAllOrcamentos = "SELECT DISTINCT orca.id_orcamento, orca.name, orca.descricao, orca.preco, orca.product_id_product, orca.cliente_id_cliente, pro.id_product, pro.name_product,
                                    pro.quantity, cli.id_cliente, cli.cli_name
         FROM orcamento AS orca 
         INNER JOIN product AS pro ON pro.id_product = orca.product_id_product

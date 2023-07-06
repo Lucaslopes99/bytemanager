@@ -1,0 +1,4 @@
+candidates_img/*
+pc_img/*
+!pc_img/.gitkeep
+!candidates_img/.gitkeep

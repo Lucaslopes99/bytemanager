@@ -6,7 +6,7 @@ $sqlDeleteCliente = "DELETE FROM cliente WHERE id_cliente = $id_cliente";
 $result = mysqli_query($conn, $sqlDeleteCliente);
 
 
-header("Location: /bytemanager/cliente.php");
+header("Location: /cliente.php");
 
 exit();
 
