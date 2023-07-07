@@ -21,7 +21,7 @@ include "config.php";
 
     // Checa se o update foi realizado com sucesso
     if ($sqlSuccess == true) {
-        header("Location: /bytemanager/cliente.php");
+        header("Location: /cliente.php");
     }
 
     else {
