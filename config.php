@@ -5,7 +5,7 @@
 
     $server = "localhost";
     $user = "root";
-    $password = "root";
+    $password = "";
     $database = "db_bytemanager";
 
     

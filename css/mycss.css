@@ -440,9 +440,26 @@ footer{
     position: relative;
 }
 
+.show-icon{
+    width: 35px;
+    height: 35px;
+    left: 9%;
+    position: relative;
+}
+
+
 .edit-icon{
     width: 35px;
     height: 35px;
     left: 10px;
     position: relative;
+}
+
+.nav-cliente:visited {
+    color:#00ff4c
+}
+.nav-cliente:focus {
+    color: red;
+    outline: #00ff4c;
+
 }

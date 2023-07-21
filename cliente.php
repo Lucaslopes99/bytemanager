@@ -27,7 +27,7 @@
     $search = $_POST['search'] ?? '';
 
     include "config.php";
-
+    include 'teste.php';
 
     // Lista todos os clientes e compara com a fk de orçamento para ver se tem orçamento com esse cliente. O distinct faz apenas um registro único ser retornado caso tenham repetidos
 
@@ -53,7 +53,7 @@
 
     <!--- NAV BAR-->
 
-    
+
     <header>
         <nav id="" class="navbar nav-color">
             <div class="mr-sm-2  ">
@@ -126,7 +126,7 @@
 
         <main>
 
-            <!-- Clientes Table -->
+            <!-- Clientes Cards-->
 
             <div>
                 <form class="input-group" method="POST">
@@ -165,16 +165,97 @@
 
                         <tbody>
                             <tr>
+
                                 <td><?php echo $i ?></td>
                                 <td><?php echo $cli_name ?></td>
                                 <td><?php echo $cnpj ?></td>
                                 <td>(18) 3221-5526</td>
                                 <td>
                                     <a type="button" title="Editar cliente" href="editcliente.php?id=<?php echo $id_cliente ?>"><img src="img/edit.png" class="edit-icon btn-effect"> </a>
-                                    <a type="button" class="delete-icon" title="Deletar cliente" data-bs-toggle="modal" data-bs-target="#confirmDeleteClienteModal<?php echo $id_cliente ?>"><img src="img/delete.png" class="delete-icon btn-effect"> </a>
+                                    <a type="button" title="Deletar cliente" class="delete-icon"  data-bs-toggle="modal" data-bs-target="#confirmDeleteClienteModal<?php echo $id_cliente ?>"><img src="img/delete.png" class="delete-icon btn-effect"> </a>
+                                    <a type="button" title="Visualizar" class="show-icon" data-bs-toggle="modal" href="#exampleModal<?php echo $id_cliente ?>"><img src="img/show.png" class="show-icon btn-effect"></a>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal<?php echo $id_cliente ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-fullscreen">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Informações de <?php echo $cli_name ?></h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                                                        <div class="container-fluid">
+                                                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                                                <span class="navbar-toggler-icon"></span>
+                                                            </button>
+                                                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                                                    <li class="nav-item">
+                                                                    <button class="btn btn-primary" href="#email<?php echo $id_cliente ?>" class="nav-cliente" type="button" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="email<?php echo $id_cliente ?>">E-mail </button>
+                                                                    <button class="btn btn-primary" href="#backup<?php echo $id_cliente ?>" class="nav-cliente" type="button" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="backup<?php echo $id_cliente ?>">Backup </button>
+
+                                                                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Ver tudo</button>
+                                                                    </li>                                                          
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </nav>
+
+
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="collapse multi-collapse" id="email<?php echo $id_cliente ?>">
+                                                            <br>
+                                                                <div class="card card-body">
+                                                                
+                                                                    
+                                                                    <table class="table table-light table-striped table-hover table-borderless">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th scope="col">#</th>
+                                                                                <th scope="col">Nome</th>
+                                                                                <th scope="col">E-mail</th>
+                                                                                <th scope="col">Tipo de conta</th>
+                                                                                <th scope="col">Data de criação</th>
+                                                                                <th scope="col">ID Cliente</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        <?php $linhasTabela = gerarContas($data); ?>
+                                                                        <?php echo $linhasTabela; ?>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <span> 
+                                                                        <?php $linhasTabela = totalContas($data); ?>
+                                                                    </span>                                                                                                                     
+                                                                </div>
+                                                                <br>
+                                                            </div>
+                                                        </div>
+
+                                                        
+                                                        <div class="col-12">
+                                                            <div class="collapse multi-collapse" id="backup<?php echo $id_cliente ?>">
+                                                                <div class="card card-body">
+                                                                    <?php echo $cli_name ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                 </td>
-
 
                                 <!-- Modal Confirm Delete Cliente-->
                                 <div class="modal fade" id="confirmDeleteClienteModal<?php echo $id_cliente ?>" tabindex="-1" aria-labelledby="confirmDeleteClienteModalLabel" aria-hidden="true">
@@ -190,7 +271,7 @@
                                             </div>
 
                                             <div class="modal-footer">
-                                              
+
                                                 <?php
 
                                                 if ($id_cliente == $cliente) {
@@ -211,34 +292,31 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </tr>
-
                         </tbody>
-                    <?php
-
-                    }
-                    ?>
-                </table>
-
             </div>
 
-            <!-- Paginação -->
+        <?php
 
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-end">
-                    <li class="page-item disabled">
-                        <a class="page-link">Previous</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
-            </nav>
+                    }
+        ?>
+        </table>
 
+        <!-- Paginação -->
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+                <li class="page-item disabled">
+                    <a class="page-link">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
 
 
         </main>

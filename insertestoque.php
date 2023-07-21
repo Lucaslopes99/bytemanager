@@ -60,3 +60,4 @@
 
     // document.getElementById("myImage").src = "landscape.jpg";
     //document.getElementById("demo").value = lat;
+?>

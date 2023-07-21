@@ -1,154 +1,186 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
 
-<head>
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
+$header = [
+    'alg' => 'HS256',
+    'typ' => 'JWT'
+];
 
-<body>
+// HEADER __________________________________________________
 
+// Converte o array em objeto
+$header = json_encode($header);
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalExemplo">
-        Abrir modal de demonstração
-    </button>
-    <!-- Modal -->
-    <div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Título do modal</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
+// Codifica dados em base64
+$header = base64_encode($header);
 
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Primeiro</th>
-                                <th scope="col">Último</th>
-                                <th scope="col">Nickname</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalExemplo1">
-                                        Abrir modal de demonstração
-                                    </button>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="modalExemplo1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Título do modal</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Primeiro modal
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                                    <button type="button" class="btn btn-primary">Salvar mudanças</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+// PAYLOAD __________________________________________________
+
+// Chave pública
+
+$duracao = time() + (7 * 24 * 60 * 60);
+
+$payload = [
+    'exp' => $duracao,
+    'jti' => "5fcb39c8c887d64d2b4a0cc70eaf7e048227a403"
+];
+
+// Converte o array em objeto
+$payload = json_encode($payload);
+
+// Codifica dados em base64
+$payload = base64_encode($payload);
 
 
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalExemplo2">
-                                        Abrir modal de demonstração
-                                    </button>
+// Chave privada
+$chave = '';
+$keyAPI = 'C:\Users\Lucas\Documents\keyAPI.txt';
 
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="modalExemplo2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Título do modal</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Segundo modal
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                                    <button type="button" class="btn btn-primary">Salvar mudanças</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+if (file_exists($keyAPI)) {
+    $chave = file($keyAPI);
 
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalExemplo3">
-                                        Abrir modal de demonstração
-                                    </button>
+    foreach ($chave as $linha) {
+        $linha = base64_decode($linha);
+       
+    }
+} else {
+    echo "O arquivo não foi encontrado.";
+}
 
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="modalExemplo3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Título do modal</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Terceiro modal
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                                    <button type="button" class="btn btn-primary">Salvar mudanças</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+$signature = hash_hmac('sha256', "$header.$payload", "$linha", true);
 
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary">Salvar mudanças</button>
-                </div>
-            </div>
-        </div>
-    </div>
+// Codifica dados em base64
+$signature = base64_encode($signature);
 
 
+// TOKEN __________________________________________________
+
+$token = "$header.$payload.$signature";
+
+//echo "$token <br><br>"; //Token completo de requisição a API
+
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_URL, "https://api.skymail.net.br/v1/mailbox?query=@alpha");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+  'Authorization: bearer ' . $token
+));
+
+$response = curl_exec($ch);
+curl_close($ch);
+
+//var_dump($response);
+
+$data = [
+    $response
+];
+
+
+function gerarContas($data) {
+    $linhasTabela = '';
+    
+    foreach ($data as $item) {
+        $decodedItem = json_decode($item, true);
+        if ($decodedItem && isset($decodedItem['data'])) {
+            
+            foreach ($decodedItem['data'] as $index => $info) {
+                $linhasTabela .= "<tr>";
+                $linhasTabela .= "<td> $index</td>"; //indice
+                $linhasTabela .= "<td> " . $info['displayname'] . "</td>"; //nome
+                $linhasTabela .= "<td>" . $info['mail'] . "</td>"; //email
+                $linhasTabela .= "<td> " . $info['accounttype'] . "</td>"; //tamanho conta
+                $linhasTabela .= "<td> " . $info['creationdate'] . "</td>"; //data criação
+                $linhasTabela .= "<td> " . $info['clientId'] . "</td>"; //id cliente
+                $linhasTabela .= "</tr>";
+          
+            }
+          
+        }
+        
+    }
+    return $linhasTabela;
+
+ 
+    
+}
+
+
+function totalContas($data) {
+    $linhasTabela = '';
+    $count5GB =0;
+    $count25GB =0;
+    $count50GB =0;
+    $count100GB =0;
+    $count200GB =0;
+  
+    
+    
+    foreach ($data as $item) {
+        $decodedItem = json_decode($item, true);
+        if ($decodedItem && isset($decodedItem['data'])) {
+            
+            foreach ($decodedItem['data'] as $index => $info) {
+                $linhasTabela .= "<tr>";
+                $linhasTabela .= "<td> $index</td>"; //indice
+                $linhasTabela .= "<td> " . $info['displayname'] . "</td>"; //nome
+                $linhasTabela .= "<td>" . $info['mail'] . "</td>"; //email
+                $linhasTabela .= "<td> " . $info['accounttype'] . "</td>"; //tamanho conta
+                $linhasTabela .= "<td> " . $info['creationdate'] . "</td>"; //data criação
+                $linhasTabela .= "<td> " . $info['clientId'] . "</td>"; //id cliente
+                $linhasTabela .= "</tr>";
+
+                $info['accounttype'];
+                if($info['accounttype'] == "SkyExchange 5GB" || $info['accounttype'] == "SkyMail 5GB"){
+                    $count5GB = $count5GB + 1;
+        
+                  
+                }
+        
+                if($info['accounttype'] == "SkyExchange 25GB" || $info['accounttype'] == "SkyMail 25GB") {
+                    $count25GB = $count25GB +1;
+                    
+                }
+        
+                if($info['accounttype'] == "SkyExchange 50GB" || $info['accounttype'] == "SkyMail 50GB" ) {
+                $count50GB = $count50GB +1;
+               
+                }
+                if($info['accounttype'] == "SkyExchange 100GB" || $info['accounttype'] == "SkyMail 100GB" ) {
+                    $count100GB = $count100GB +1;
+                   
+                }
+                if($info['accounttype'] == "SkyExchange 200GB" || $info['accounttype'] == "SkyMail 200GB" ) {
+                    $count200GB = $count200GB +1;
+                   
+                }
+          
+            }
+          
+        }
+        
+    }
+   
+    for($i =0; $i<=$index; $i++){
+        $i = $i + 1;
+        
+
+    }
+    echo "SkyMail 5GB: ".$count5GB."<br>";
+    echo "SkyMail 25GB: ".$count25GB . "<br>";
+    echo "SkyMail 50GB: ".$count50GB. "<br>";
+    echo "SkyMail 100GB: ".$count100GB. "<br>";
+    echo "SkyMail 200GB: ".$count200GB. "<br>";
+    echo "TOTAL: ".$i . "<br>";
+   
+
+ 
+    
+}
 
 
 
-</body>
 
-</html>
+
+
+
+

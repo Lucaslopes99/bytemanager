@@ -173,7 +173,7 @@
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">Confirmar</button>
+                                        <button type="submit" name="confirmOrcamento<?php echo $id_orcamento?>" class="btn btn-primary">Confirmar</button>
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
 
                                     </div>
@@ -182,11 +182,11 @@
                         </div>
                     </div>
                     <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="descricao " value="<?php echo $rowOrcamento['descricao']; ?>"><?php echo $rowOrcamento['descricao']; ?></textarea>
+                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="descricao" value="<?php echo $rowOrcamento['descricao']; ?>"><?php echo $rowOrcamento['descricao']; ?></textarea>
                         <label for="floatingTextarea">Descrição</label>
                     </div>
 
-                    <button type="submit" class="btn btn-primary mt-3 ">Enviar</button>
+                    <button type="submit" name="updateDescricao<?php echo $id_orcamento?>" class="btn btn-primary mt-3 ">Enviar</button>
                     <a href="orcamento.php"><button type="button" class="btn btn-secondary mt-3 ml-3">Cancelar</button></a>
 
                 </form>
