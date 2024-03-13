@@ -22,7 +22,7 @@
         exit();
       }
        else{
-        header("Location: /estoque2.php");
+        header("Location: http://localhost/bytemanager/estoque2.php");
        }
     }
     else{

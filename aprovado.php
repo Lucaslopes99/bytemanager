@@ -393,7 +393,7 @@
 
                                         <div class="formatbtn ">
                                             <div class="text-right">
-                                            <a type="button" title="Aprovado"><img src="img/check.png" class="btn-confirm-orcamento"></a>
+                                            <a type="button" title="Aprovado"><!--<img src="img/check.png" class="btn-confirm-orcamento">--></a>
                                             </div>
                                         </div>
 
@@ -440,24 +440,21 @@
             }
             ?>
 
-
-
-
             <!-- [[ Paginação ]] -->
-
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-end">
-                    <li class="page-item disabled">
-                        <a class="page-link">Previous</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
-            </nav>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-end">
+                        <li class="page-item disabled">
+                            <a class="page-link">Previous</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+             
 
         </main>
     </main>
@@ -471,13 +468,12 @@
 
 
     </script>
-    <!-- FOOTER
+  
 
-    <footer class="">
-        <h6 class="text-footer"> © 2023 Allbytes Tecnologia. Todos os direitos reservados. </h6>
+    <footer >
+        <span class="text-footer"> © 2023 Allbytes Tecnologia. Todos os direitos reservados. </span>
     </footer>
         
-    -->
 
 </body>
 

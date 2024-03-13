@@ -36,7 +36,7 @@
         // exit();
 
         if(move_uploaded_file($_FILES['candidateimg']['tmp_name'], $locationc)){
-            header("Location: /estoque2.php");
+            header("Location: http://localhost/bytemanager/estoque2.php");
             echo "$name Cadstrado";
             exit();
         }

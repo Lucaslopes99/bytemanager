@@ -25,7 +25,8 @@
     $id_cliente = $_GET['id'] ?? '';;
 
 
-    // Get each atribute from products on edit page
+    // Acessa todos os dados da tabela cliente
+
     $sqlGetClientes = "SELECT * FROM cliente WHERE id_cliente = '$id_cliente'";
     $clientes = mysqli_query($conn, $sqlGetClientes);
     $rowCliente = mysqli_fetch_assoc($clientes);
@@ -91,6 +92,35 @@
                         </div>
                     </div>
 
+                    <div class="form-group format mx-auto inputbox">
+                        <div class="">
+                        <label for="inputState" class=" form-label fw-medium" >Telefone</label>
+                            <input required type="text" class="form-control mx-auto" name="telefone" placeholder="Telefone" required value="<?php echo $rowCliente['telefone']; ?>">
+                        </div>
+                    </div>
+
+                    
+                    <div class="form-group format mx-auto inputbox">
+                        <div class="">
+                        <label for="inputState" class=" form-label fw-medium" >Dominio E-mail</label>
+                            <input required type="text" class="form-control mx-auto" name="email_domain" placeholder="Dominio E-mail" value="<?php echo $rowCliente['email_domain']; ?>">
+                        </div>
+                    </div>
+
+                    <div class="form-group format mx-auto inputbox">
+                        <div class="">
+                        <label for="inputState" class=" form-label fw-medium" >Dominio AD</label>
+                            <input required type="text" class="form-control mx-auto" name="ad_domain" placeholder="Dominio AD" value="<?php echo $rowCliente['ad_domain']; ?>">
+                        </div>
+                    </div>
+
+                    <div class="form-group format mx-auto inputbox">
+                        <div class="">
+                        <label for="inputState" class=" form-label fw-medium" >Cota Backup</label>
+                            <input required type="text" class="form-control mx-auto"name="cota_backup" placeholder="Cota Backup" value="<?php echo $rowCliente['cota_backup']; ?>">
+                        </div>
+                    </div>
+
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary ">Confirmar</button>
                         <a href="cliente.php"><button type="button" class="btn btn-secondary">Cancelar</button></a>
@@ -115,10 +145,11 @@
 
 
 
-    <footer class="">
+   <!-- <footer class="">
         <h6 class="text-footer"> © 2023 Allbytes Tecnologia. Todos os direitos reservados. </h6>
     </footer>
-
+    -->
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
 

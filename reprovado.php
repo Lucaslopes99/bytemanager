@@ -393,7 +393,7 @@
 
                                         <div class="formatbtn ">
                                             <div class="text-right">
-                                            <a type="button" title="Aprovado"><img src="img/cross.png" class="btn-confirm-orcamento"></a>
+                                            <a type="button" title="Aprovado"><!--<img src="img/cross.png" class="btn-confirm-orcamento">--></a>
                                             </div>
                                         </div>
 
@@ -458,7 +458,7 @@
                     </li>
                 </ul>
             </nav>
-
+        
         </main>
     </main>
 
@@ -471,13 +471,12 @@
 
 
     </script>
-    <!-- FOOTER
+   
 
-    <footer class="">
-        <h6 class="text-footer"> © 2023 Allbytes Tecnologia. Todos os direitos reservados. </h6>
+    <footer >
+        <span class="text-footer"> © 2023 Allbytes Tecnologia. Todos os direitos reservados. </span>
     </footer>
         
-    -->
 
 </body>
 

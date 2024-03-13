@@ -31,7 +31,7 @@
 
     // Lista todos os clientes e compara com a fk de orçamento para ver se tem orçamento com esse cliente. O distinct faz apenas um registro único ser retornado caso tenham repetidos
 
-    $sqlGetAllClientes = "SELECT DISTINCT cli.id_cliente, cli.cli_name, cli.cnpj, orca.cliente_id_cliente
+    $sqlGetAllClientes = "SELECT DISTINCT cli.id_cliente, cli.cli_name, cli.cnpj, cli.telefone, cli.email_domain, cli.ad_domain, cli.cota_backup, orca.cliente_id_cliente
         FROM cliente AS cli 
         LEFT JOIN orcamento AS orca ON cli.id_cliente = orca.cliente_id_cliente
         WHERE cli_name LIKE '%$search%'";
@@ -94,6 +94,7 @@
 
                     <form action="insertcliente.php" method="POST" enctype="multipart/form-data" class="mx-md-5">
                         <input type="hidden" name="id_orcamento" value=""></input>
+                        <input type="hidden" name="id_cliente" value="<?php echo $id_cliente ?>"></input>
                         <div class="form-group format mx-auto inputbox">
                             <div class=" ">
                                 <input required type="text" class="form-control mx-auto" name="name_cliente" placeholder="Nome fantasia">
@@ -103,6 +104,30 @@
                         <div class="form-group format mx-auto inputbox">
                             <div class=" ">
                                 <input required type="text" class="form-control  cliente-input-cnpj" name="cnpj" placeholder="CNPJ">
+                            </div>
+                        </div>
+
+                        <div class="form-group format mx-auto inputbox">
+                            <div class=" ">
+                                <input required type="text" class="form-control  cliente-input-cnpj" name="telefone" placeholder="Telefone">
+                            </div>
+                        </div>
+
+                        <div class="form-group format mx-auto inputbox">
+                            <div class=" ">
+                                <input type="text" class="form-control  cliente-input-cnpj" name="email_domain" placeholder="Dominio E-mail">
+                            </div>
+                        </div>
+
+                        <div class="form-group format mx-auto inputbox">
+                            <div class=" ">
+                                <input type="text" class="form-control  cliente-input-cnpj" name="ad_domain" placeholder="Dominio AD">
+                            </div>
+                        </div>
+
+                        <div class="form-group format mx-auto inputbox">
+                            <div class=" ">
+                                <input type="text" class="form-control  cliente-input-cnpj" name="cota_backup" placeholder="Cota Backup">
                             </div>
                         </div>
 
@@ -159,6 +184,10 @@
                         $id_cliente = $row['id_cliente'];
                         $cli_name = $row['cli_name'];
                         $cnpj = $row['cnpj'];
+                        $telefone = $row['telefone'];
+                        $email_domain = $row['email_domain'];
+                        $ad_domain = $row['ad_domain'];
+                        $cota_backup = $row['cota_backup'];
                         $cliente = $row['cliente_id_cliente'];
 
                     ?>
@@ -169,11 +198,11 @@
                                 <td><?php echo $i ?></td>
                                 <td><?php echo $cli_name ?></td>
                                 <td><?php echo $cnpj ?></td>
-                                <td>(18) 3221-5526</td>
+                                <td><?php echo $telefone ?></td>
                                 <td>
-                                    <a type="button" title="Editar cliente" href="editcliente.php?id=<?php echo $id_cliente ?>"><img src="img/edit.png" class="edit-icon btn-effect"> </a>
-                                    <a type="button" title="Deletar cliente" class="delete-icon"  data-bs-toggle="modal" data-bs-target="#confirmDeleteClienteModal<?php echo $id_cliente ?>"><img src="img/delete.png" class="delete-icon btn-effect"> </a>
-                                    <a type="button" title="Visualizar" class="show-icon" data-bs-toggle="modal" href="#exampleModal<?php echo $id_cliente ?>"><img src="img/show.png" class="show-icon btn-effect"></a>
+                                    <a type="button" title="Editar cliente" href="editcliente.php?id=<?php echo $id_cliente ?>"><img src="img/edit.png" class="edit-icon-cli btn-effect"> </a>
+                                    <a type="button" title="Deletar cliente" class="delete-icon-cli" data-bs-toggle="modal" data-bs-target="#confirmDeleteClienteModal<?php echo $id_cliente ?>"><img src="img/delete.png" class="delete-icon-cli btn-effect"> </a>
+                                    <a type="button" title="Visualizar" class="show-icon-cli" data-bs-toggle="modal" href="#exampleModal<?php echo $id_cliente ?>"><img src="img/show.png" class="show-icon-cli btn-effect"></a>
 
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModal<?php echo $id_cliente ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -193,11 +222,11 @@
                                                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                                                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                                                     <li class="nav-item">
-                                                                    <button class="btn btn-primary" href="#email<?php echo $id_cliente ?>" class="nav-cliente" type="button" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="email<?php echo $id_cliente ?>">E-mail </button>
-                                                                    <button class="btn btn-primary" href="#backup<?php echo $id_cliente ?>" class="nav-cliente" type="button" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="backup<?php echo $id_cliente ?>">Backup </button>
+                                                                        <button class="btn btn-primary" href="#email<?php echo $id_cliente ?>" class="nav-cliente" type="button" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="email<?php echo $id_cliente ?>">Skymail </button>
+                                                                        <button class="btn btn-primary" href="#backup<?php echo $id_cliente ?>" class="nav-cliente" type="button" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="backup<?php echo $id_cliente ?>">Backup </button>
 
                                                                         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Ver tudo</button>
-                                                                    </li>                                                          
+                                                                    </li>
                                                                 </ul>
                                                             </div>
                                                         </div>
@@ -207,10 +236,10 @@
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <div class="collapse multi-collapse" id="email<?php echo $id_cliente ?>">
-                                                            <br>
+                                                                <br>
                                                                 <div class="card card-body">
-                                                                
-                                                                    
+
+
                                                                     <table class="table table-light table-striped table-hover table-borderless">
                                                                         <thead>
                                                                             <tr>
@@ -223,23 +252,74 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                        <?php $linhasTabela = gerarContas($data); ?>
-                                                                        <?php echo $linhasTabela; ?>
+                                                                            <?php
+                                                                            $data = [];
+                                                                            $conta = [];
+                                                                            $produtosCliente = [];
+                                                                             $linhasTabela = dadosCliente($data, $conta, $email_domain); 
+                                                                             echo $linhasTabela;
+                                                                            
+
+                                                                             ?>
+                                                                        
+                                                                          
+
+
+
                                                                         </tbody>
+
                                                                     </table>
-                                                                    <span> 
-                                                                        <?php $linhasTabela = totalContas($data); ?>
-                                                                    </span>                                                                                                                     
+                                                                    <table class="">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th scope="col">Produtos Utilizados:</th>
+                                                                                <th scope="col">Produtos Contratados:</th>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <?php
+                                                                                    $data = [];
+                                                                                    $conta = [];
+                                                                                    $totalcontas = totalContas($data, $conta, $email_domain);
+
+                                                                                    ?>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <?php
+                                                                                    echo $totalcontas;
+
+                                                                                    ?>
+
+                                                                                </td>
+                                                                            </tr>
+                                                                        </thead>
+                                                                    </table>
+
+
+
+
                                                                 </div>
                                                                 <br>
                                                             </div>
                                                         </div>
 
-                                                        
+
                                                         <div class="col-12">
                                                             <div class="collapse multi-collapse" id="backup<?php echo $id_cliente ?>">
                                                                 <div class="card card-body">
-                                                                    <?php echo $cli_name ?>
+
+                                                                    <?php echo $cli_name ?> <br>
+                                                                    <?php //echo $email_domain ?><br>
+                                                                    <?php echo $ad_domain ?><br>
+                                                                    <?php echo $cota_backup ?>
+
+                                                                    <br>
+                                                                    <?php 
+                                                                    
+
+                                                                    ?>
+                                                               
+
                                                                 </div>
                                                             </div>
                                                         </div>

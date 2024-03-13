@@ -1,0 +1,27 @@
+
+RewriteEngine on
+
+RewriteRule ^conteudo/([0-9]+)/([0-9]+)/([a-z0-9_-]+)(\.html)?$ conteudo.php?idpage=$1&idcat=$2&titulo=$3
+RewriteRule ^cursos\/([0-9]+)(\/[a-z0-9_-]+\.html)?$ cursos.php?categoria=$1&titulo=$2
+
+RewriteRule ^curso\/([0-9]+)(\/[a-z0-9_-]+\.html)?$ curso.php?idcurso=$1&titulo=$2
+RewriteRule ^mba\/([0-9]+)(\/[a-z0-9_-]+\.html)?$ curso.php?idcurso=$1&titulo=$2
+RewriteRule ^pos\/([0-9]+)(\/[a-z0-9_-]+\.html)?$ curso.php?idcurso=$1&titulo=$2
+RewriteRule ^curta\/([0-9]+)(\/[a-z0-9_-]+\.html)?$ curso.php?idcurso=$1&titulo=$2
+RewriteRule ^palestra\/([0-9]+)(\/[a-z0-9_-]+\.html)?$ curso.php?idcurso=$1&titulo=$2
+
+RewriteRule ^contato\/([0-9]+)(\/[a-z0-9_-]+)?(\/[a-z0-9_-]+\.html)?$ contato.php?pagina=$1&titulo=$2
+RewriteRule ^palestras\/([0-9]+)(\/[a-z0-9_-]+)?(\/[a-z0-9_-]+\.html)?$ palestras.php?pagina=$1&titulo=$2
+RewriteRule ^pacotes\/([0-9]+)(\/[a-z0-9_-]+)?(\/[a-z0-9_-]+\.html)?$ pacotes.php?pagina=$1&titulo=$2
+RewriteRule ^inscricoes\/([0-9]+)(\/[a-z0-9_-]+)?(\/[a-z0-9_-]+\.html)?$ inscricoes.php?pagina=$1&titulo=$2
+RewriteRule ^enrollment\/([0-9]+)(\/[a-z0-9_-]+)?(\/[a-z0-9_-]+\.html)?$ enrollment.php?pagina=$1&titulo=$2
+RewriteRule ^preinscricoes\/([0-9]+)(\/[a-z0-9_-]+)?(\/[a-z0-9_-]+\.html)?$ preinscricoes.php?pagina=$1&titulo=$2
+RewriteRule ^localizacao\/([0-9]+)(\/[a-z0-9_-]+)?(\/[a-z0-9_-]+\.html)?$ localizacao.php?pagina=$1&titulo=$2
+RewriteRule ^noticias/([0-9]+)/([0-9]+)/([a-z0-9_-]+)(\.html)?$ noticias.php?pagina=$1&categoria=$2&titulo=$3
+RewriteRule ^noticia\/([0-9]+)?(\/[a-z0-9_-]+\.html)?$ noticia.php?idnot=$1&titulo=$2
+
+RewriteRule ^servicos\/([0-9]+)?(\/[a-z0-9_-]+\.html)?$ servicos.php?ano=$1&titulo=$2
+RewriteRule ^servico\/([0-9]+)?(\/[a-z0-9_-]+\.html)?$ servico.php?id=$1&titulo=$2
+
+RewriteRule ^equipe\/([0-9]+)?(\/[a-z0-9_-]+\.html)?$ equipe.php?id=$1&titulo=$2
+RewriteRule ^profissional\/([0-9]+)?(\/[a-z0-9_-]+\.html)?$ profissional.php?id=$1&titulo=$2

@@ -5,7 +5,7 @@
     $sqlDeleteProduct = "DELETE FROM product WHERE id_product = $id_product";
     $result = mysqli_query($conn, $sqlDeleteProduct);
 
-    header("Location: /estoque2.php");
+    header("Location: http://localhost/bytemanager/estoque2.php");
     exit();
 
 ?>

@@ -20,7 +20,8 @@ $sqlUpdateAprovacao= "UPDATE orcamento SET status = '1' WHERE id_orcamento = $id
 $updateAprovacao = mysqli_query($conn, $sqlUpdateAprovacao);
 //var_dump($sqlUpdateAprovacao);
 
-header("Location: /orcado.php");
+
+header("Location: http://localhost/bytemanager/orcado.php");
 
 }
 
@@ -30,7 +31,7 @@ if (isset($_POST['reprovar'.$id_orcamento])) {
     $updateAprovacao = mysqli_query($conn, $sqlUpdateReprovacao);
     //var_dump($sqlUpdateReprovacao);
     
-    header("Location: /orcado.php");
+    header("Location: http://localhost/bytemanager/orcado.php");
 
 }
 

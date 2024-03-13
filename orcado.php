@@ -437,8 +437,9 @@
                                         </form>
 
                                         <form  action="updateaprovacao.php" method="POST" enctype="multipart/form-data" class="mx-md-5">
-                                            <input type="hidden" name="id_orcamento" value="<?php echo $id_orcamento ?>"></input>                                      
-                                            <!-- Modal Confirm Aprovação-->
+                                            <input type="hidden" name="id_orcamento" value="<?php echo $id_orcamento ?>"></input>       
+                                                                           
+                                            <!-- Modal Confirm Aprovação-->         
                                             <div class="modal fade" id="confirmReprovacaoModal<?php echo $id_orcamento ?>" tabindex="-1" aria-labelledby="confirmRepovacaoLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">

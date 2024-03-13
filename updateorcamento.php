@@ -18,19 +18,19 @@ if (isset($_POST['updateDescricao'.$id_orcamento])) {
     $updateDescricao = mysqli_query($conn, $sqlUpdateDescricao);
     //var_dump($sqlUpdateDescricao);
     
-    header("Location: /orcamento.php");
     
+    header("Location: http://localhost/bytemanager/orcamento.php");
 }
 
 elseif (isset($_POST['confirmOrcamento'.$id_orcamento])) {
 
-    // Se tiver utilizando um produto, envia preço do dele
+    // Se tiver utilizando um produto, envia preço dele
     if ($id_product != null) {
 
         $priceProduct = $_POST['priceProduct'];
         $sqlUpdateOrcamento= "UPDATE orcamento SET preco ='$priceProduct' WHERE id_orcamento = $id_orcamento ";
         $updateOrcamento = mysqli_query($conn, $sqlUpdateOrcamento);
-        header("Location: /orcamento.php");
+        header("Location: http://localhost/bytemanager/orcamento.php");
     }
         
         // Senão, pede para informar o preço 
@@ -40,7 +40,7 @@ elseif (isset($_POST['confirmOrcamento'.$id_orcamento])) {
         
             $sqlUpdateOrcamento= "UPDATE orcamento SET preco ='$price' WHERE id_orcamento = $id_orcamento ";
             $updateOrcamento = mysqli_query($conn, $sqlUpdateOrcamento);
-            header("Location: /orcamento.php");
+            header("Location: http://localhost/bytemanager/orcamento.php");
         }
     
 }

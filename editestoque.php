@@ -39,7 +39,7 @@ include "config.php";
 
     // Checa se o update foi realizado com sucesso, seja feito com ou sem alteração da imagem
     if ($sqlSuccess == true) {
-        header("Location: /estoque2.php");
+        header("Location: http://localhost/bytemanager/estoque2.php");
        var_dump($sqlUpdateProductNoImage);
 
        move_uploaded_file($_FILES['candidateimg']['tmp_name'], $locationc);

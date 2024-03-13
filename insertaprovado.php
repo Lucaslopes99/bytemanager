@@ -14,7 +14,7 @@
 
     if(mysqli_query($conn, $sql)){
         echo "$name Cadastrado com sucesso! - ";
-        header("Location: /cliente.php");
+        header("Location: http://localhost/bytemanager/cliente.php");
         exit();
         
     }

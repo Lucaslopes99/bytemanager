@@ -7,6 +7,7 @@ $result = mysqli_query($conn, $sqlDeleteType);
 
 
 header("Location: /estoque2.php");
+header("Location: http://localhost/bytemanager/estoque2.php");
 exit();
 
 ?>

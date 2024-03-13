@@ -25,7 +25,7 @@
     
     if(mysqli_query($conn, $sql)){
         //echo "$name Cadastrado com sucesso! - ";
-        header("Location: /orcamento.php");
+        header("Location: http://localhost/bytemanager/orcamento.php");
 
     }
     else{
