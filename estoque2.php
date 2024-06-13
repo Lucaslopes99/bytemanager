@@ -212,30 +212,51 @@
                             </div>
                             <br>
 
-                            <div class="">
+
+                            <?php
+                            $i = 0;
+                            while ($row = $sqlAllTypes->fetch_assoc()) {
+                                $i++;
+                                $id_type = $row['id_type'];
+                            ?>
                                 <table class="table">
                                     <tbody>
-                                        <?php
+                                        <tr>
+                                            <th scope="row"><?php echo $i; ?></th>
+                                            <td><?php echo $row['type']; ?></td>
+                                            <td><a type="button" data-bs-toggle="modal" data-bs-target="#confirmDeleteTypeModal" href="" class="btn btn-danger button-modal-type">Delete</a></td>
 
-                                        $i = 0;
-                                        while ($row = $sqlAllTypes->fetch_assoc()) {
-                                            $i++;
-                                            $id_type = $row['id_type'];
-
-                                        ?>
-
-
-                                            <tr>
-                                                <th scope="row"><?php echo $i; ?> </th>
-                                                <td><?php echo $row['type']; ?></td>
-                                                <td><a type="button" data-bs-toggle="modal" data-bs-target="#confirmDeleteTypeModal" href="" class="btn btn-danger button-modal-type">Delete</a></td>
-                                            </tr>
-
-
-                                        <?php } ?>
+                                        </tr>
                                     </tbody>
                                 </table>
-                            </div>
+
+
+
+                                <!-- Modal Confirm Delete Type-->
+                                <div class="modal fade" id="confirmDeleteTypeModal" tabindex="-1" aria-labelledby="confirmDeleteTypeModalLabel<?php echo $id_type ?>" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="confirmDeleteTypeModalLabel<?php echo $id_type ?>">Excluir Tipo</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h3 class="modal-title fs-6">Deseja Excluir Esse Tipo?</h3>
+                                                <!-- Aqui você pode adicionar mais detalhes sobre o tipo que está sendo excluído, se desejar -->
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a type="button" href="deletetype.php?id=<?php echo $id_type ?>" class="btn btn-primary button-modal-type">Confirmar</a>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END Modal Confirm Delete Type-->
+
+                            <?php } ?>
+
+
+
                         </div>
 
                         <div class="modal-footer">
@@ -248,30 +269,6 @@
         </div>
     </div>
 
-
-    <!-- Modal Confirm Delete Type-->
-    <div class="modal fade" id="confirmDeleteTypeModal" tabindex="-1" aria-labelledby="confirmDeleteTypeModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="confirmDeleteTypeModalLabel">Excluir Tipo</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h3 class="modal-title fs-6">Deseja Excluir Esse Tipo? </h3>
-                    <!-- POP UP SIMPLES <a href="excluir.php" onclick="return confirm('Deseja excluir esse registro ?')">Excluir</a> -->
-                </div>
-
-                <div class="modal-footer">
-                    <a type="button" href="deletetype.php?id=<?php echo $id_type ?>" class="btn btn-primary button-modal-type">Confirmar</a></td>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!-- END Modal Confirm Delete Type-->
 
     <main class="container mt-5">
         <div class="bg-img" style="background-image: url('./img/estoquebg.jpg');">
@@ -308,6 +305,8 @@
 
 
             ?>
+
+
 
                 <!-- Cards estoque -->
 
