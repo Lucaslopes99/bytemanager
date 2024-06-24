@@ -21,61 +21,65 @@
 
 
     <header>
+    
+        <div class="bg-img" style="background-image: url('./img/background.jpg');">
+            <div class="overlay"></div>
+        </div>
 
-            <div class="bg-img" style="background-image: url('./img/background.jpg');">
-            <div class="overlay"></div>	
-            </div>
-            
     </header>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand"></a>
+            <form class="d-flex" role="search">
+            <a href="login.php"><p class="navbar-brand logout">Sair</p></a> 
+            <a href="login.php"><p class="navbar-brand logout">Sair</p></a> 
+            </form>
+        </div>
+    </nav>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-sm" >
-                    <div class="card menu-card view overlay zoom" >
-                        <img class="card-img-top img-fluid menu-img-module" src="https://cdn-icons-png.flaticon.com/512/5166/5166970.png" alt="Card image cap">
-                            <div class="card-body mask flex-center">
-                                <h5 class="card-title">Estoque</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="estoque2.php" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                            
-                            
-                    </div>           
-                </div> 
-
-                <div class="col-sm" >
-                    <div class="card menu-card">
-                        <img class="card-img-top menu-img-module" src="https://cdn-icons-png.flaticon.com/512/2228/2228780.png" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">Orçamentos</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="orcamento.php" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                            
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <div class="card menu-card view overlay zoom">
+                    <img class="card-img-top img-fluid menu-img-module" src="https://cdn-icons-png.flaticon.com/512/5166/5166970.png" alt="Card image cap">
+                    <div class="card-body mask flex-center">
+                        <h5 class="card-title">Estoque</h5>
+                        <p class="card-text">Estoque, quantidade e preço de produtos/serviços que podem ser utilizados em orçamentos. </p>
+                        <a href="estoque2.php" class="btn btn-primary" title="Continuar para Estoque">Continuar</a>
                     </div>
-                </div> 
 
-                
 
-                <div class="col-sm" >
-                    <div class="card menu-card">
-                        <img class="card-img-top menu-img-module" src="https://cdn-icons-png.flaticon.com/512/44/44562.png" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title">Clientes</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="cliente.php" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
+                </div>
+            </div>
+
+            <div class="col-sm">
+                <div class="card menu-card">
+                    <img class="card-img-top menu-img-module" src="https://cdn-icons-png.flaticon.com/512/2228/2228780.png" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Orçamentos</h5>
+                        <p class="card-text">Valor de produtos em estoque. Solicitação de orçamentos de produtos e serviços específicos.</p>
+                        <a href="orcamento.php" class="btn btn-primary" title="Continuar para Orçamentos">Continuar</a>
                     </div>
-                </div> 
 
+                </div>
+            </div>
+
+
+            <div class="col-sm">
+                <div class="card menu-card">
+                    <img class="card-img-top menu-img-module" src="https://cdn-icons-png.flaticon.com/512/44/44562.png" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Clientes</h5>
+                        <p class="card-text">Informações gerais de clientes. Produtos e serviços que possuem contratados conosco.</p>
+                        <a href="cliente.php" class="btn btn-primary" title="Continuar para Clientes">Continuar</a>
+                    </div>
+                </div>
             </div>
         </div>
 
-        
+    </div>
+    </div>
 
- 
-        
     <!--Scripts-->
 
     <script src="js/jquery.slim.min.js"></script>
@@ -83,68 +87,6 @@
     <script src="js/bootstrap.min.js"></script>
 
 
-    <div id="mapholder"></div>
-    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-    <script>
-        var x = document.getElementById("demo");
-       
-
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition, showError);
-            } else {
-                x.innerHTML = "Geolocalização não é suportada nesse browser.";
-            }
-        }
-
-        function showPosition(position) {
-            lat = position.coords.latitude;
-            lon = position.coords.longitude;
-            document.getElementById("maplat").value = lat;
-            document.getElementById("maplong").value = lon;
-
-            latlon = new google.maps.LatLng(lat, lon)
-            mapholder = document.getElementById('mapholder')
-            mapholder.style.height = '250px';
-            mapholder.style.width = '100%';
-            
-
-            var myOptions = {
-                center: latlon,
-                zoom: 14,
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                mapTypeControl: false,
-                navigationControlOptions: {
-                    style: google.maps.NavigationControlStyle.SMALL
-                }
-            };
-            var map = new google.maps.Map(document.getElementById("mapholder"), myOptions);
-            var marker = new google.maps.Marker({
-                position: latlon,
-                map: map,
-                title: "Você está Aqui!"
-            });
-        }
-        getLocation();
-
-        function showError(error) {
-            switch (error.code) {
-                case error.PERMISSION_DENIED:
-                    x.innerHTML = "Usuário rejeitou a solicitação de Geolocalização."
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    x.innerHTML = "Localização indisponível."
-                    break;
-                case error.TIMEOUT:
-                    x.innerHTML = "O tempo da requisição expirou."
-
-                    .innerHTML
-                    break;
-                case error.UNKNOWN_ERROR:
-                    x.innerHTML = "Algum erro desconhecido aconteceu."
-                    break;
-            }
-        }
     </script>
 
 </body>

@@ -98,11 +98,6 @@ footer{
     padding: 10px;
     box-shadow: 3px 10px 70px #31a1d4;
     background-image: linear-gradient(rgb(15, 62, 131), rgb(24, 25, 26));
-    
-
-    
-    
-
 }
 
 
@@ -113,10 +108,16 @@ footer{
 }
 
 
-
 .formattext{
     text-align: left;
     word-break: break-word;
+}
+
+.logout{
+    position: absolute;
+    left: 93%;
+    color: white;
+    top: 19%
 }
 
 
@@ -335,11 +336,7 @@ footer{
     transform: translateY(-5px);
     box-shadow: 5px 10px 20px rgba(69, 94, 94, 0.4);
 
-  }
-
-
-
-
+}
 
 
 .btn-orcamento{
@@ -463,3 +460,4 @@ footer{
     outline: #00ff4c;
 
 }
+

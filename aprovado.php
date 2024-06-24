@@ -469,11 +469,13 @@
 
     </script>
   
+    <!-- FOOTER
 
     <footer >
         <span class="text-footer"> © 2023 Allbytes Tecnologia. Todos os direitos reservados. </span>
     </footer>
-        
+    
+    -->
 
 </body>
 

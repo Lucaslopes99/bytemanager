@@ -39,9 +39,15 @@
 
     $products = mysqli_query($conn, $sqlGetALLProducts);
 
-    // Lista todos os tipos no select para adicionar um produto
-    $sqlGetAllProductTypes = "SELECT * FROM type_product ";
-    $productTypes = mysqli_query($conn, $sqlGetAllProductTypes);
+    // Lista todos os tipos no select quando vai adicionar um produto
+    $sqlGetAllTypes = "SELECT * FROM type_product ";
+    $productTypes = mysqli_query($conn, $sqlGetAllTypes);
+
+    // Lista todos os tipos para confirmar a exclusão do tipo
+    $sqlDeleteTypes = "SELECT DISTINCT tp.id_type, tp.type, pro.type_product_id_type 
+    FROM type_product AS tp
+    LEFT JOIN product AS pro ON pro.type_product_id_type = tp.id_type";
+    $deleteType = mysqli_query($conn, $sqlDeleteTypes);
 
     // Lista todos os tipos no modal add/delete type
     $sqlShowAllTypes = "SELECT DISTINCT tp.id_type, tp.type, pro.type_product_id_type 
@@ -76,13 +82,15 @@
 
     ?>
 
+
+
     <!---codigo html-->
 
     <header>
         <nav id="" class="navbar nav-color">
             <div class="mr-sm-2  ">
                 <a href="index.php"><img class="byte-img" src="img/byte.png" alt="..."></a>
-                <a type="button" href="estoque2.php" class="btn btn-primary my-2 my-sm-0 ml-5">Estoque</a>
+                <a type="button" href="estoque2.php" class="btn btn-primary my-2 my-sm-0 ml-3">Estoque</a>
 
                 <div class="btn-group ml-3">
                     <button type="button" class="btn btn-primary  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -96,17 +104,71 @@
                     </ul>
 
                 </div>
-                <a type="button" href="cliente.php" class="btn btn-primary  my-2 my-sm-0 ml-3">Clientes</a>
+                <a type="button" href="cliente.php" class="btn btn-primary my-2 my-sm-0 ml-3">Clientes</a>
+            </div>
+
+            <div class="container-fluid">
+                <a class="navbar-brand"></a>
+                <form class="d-flex" role="search">
+                    <a type="button" href="cliente.php" class="btn btn-primary logout">Clientes</a>
+
+                </form>
             </div>
         </nav>
+
     </header>
 
+
+    <!-- Modal Confirm Delete Type-->
+    <?php
+    $i = 0;
+    while ($row = mysqli_fetch_assoc($deleteType)) {
+        $i++;
+        $id_type = $row['id_type'];
+        $type = $row['type'];
+        $typeProduct = $row['type_product_id_type'];
+    ?>
+        <div class="modal fade" id="confirmDeleteTypeModal<?php echo $id_type ?>" tabindex="-1" aria-labelledby="confirmDeleteTypeModalLabel<?php echo $id_type ?>" aria-hidden="true">
+
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="confirmDeleteTypeModalLabel<?php echo $id_type ?>">Excluir Tipo</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <h3 class="modal-title fs-6">Deseja Excluir Esse Tipo?</h3>
+                        <!-- Aqui você pode adicionar mais detalhes sobre o tipo que está sendo excluído, se desejar -->
+                    </div>
+
+                    <div class="modal-footer">
+                        <?php
+
+                        if ($id_type == $typeProduct) {
+                        ?>
+                            <a type="button" href="deletetype.php?id=<?php echo "$id_type" ?>" class="btn btn-primary button-modal-type" onclick="return confirm('Ainda existem produtos utilizando esse tipo')">Confirmar</a></td>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+                        <?php
+                        } else {
+                        ?>
+                            <a type="button" href="deletetype.php?id=<?php echo "$id_type" ?>" class="btn btn-primary button-modal-type">Confirmar</a></td>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END Modal Confirm Delete Type-->
+    <?php } ?>
 
 
     <a href="addestoque.php" data-bs-toggle="modal" data-bs-target="#addEstoqueModal"><img src="img/addestoque.png" class="add-icon-estoque"> </a>
 
     <!-- [[ Modal Add Product ]] -->
-
     <div class="modal fade modal-dialog modal-lg" id="addEstoqueModal" tabindex="-1" aria-labelledby="addEstoqueModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -193,6 +255,9 @@
     <!-- [[ END Modal Add Product ]] -->
 
 
+
+
+
     <!-- [[ Modal Add Type ]]-->
 
     <div class="modal fade" id="addTypeModal" tabindex="-1" aria-labelledby="addTypeModalLabel" aria-hidden="true">
@@ -211,53 +276,31 @@
                                 <input required type="text" class="form-control mx-auto" name="type" placeholder="Adicionar tipo">
                             </div>
                             <br>
+                            <table class="table">
+                                <tbody>
+                                    <?php
+                                    $i = 0;
+                                    while ($row = mysqli_fetch_assoc($sqlAllTypes)) {
+                                        $i++;
+                                        $id_type = $row['id_type'];
+                                        $type = $row['type'];
+                                    ?>
 
-
-                            <?php
-                            $i = 0;
-                            while ($row = $sqlAllTypes->fetch_assoc()) {
-                                $i++;
-                                $id_type = $row['id_type'];
-                            ?>
-                                <table class="table">
-                                    <tbody>
                                         <tr>
                                             <th scope="row"><?php echo $i; ?></th>
                                             <td><?php echo $row['type']; ?></td>
-                                            <td><a type="button" data-bs-toggle="modal" data-bs-target="#confirmDeleteTypeModal" href="" class="btn btn-danger button-modal-type">Delete</a></td>
+                                            <td><a type="button" data-bs-toggle="modal" data-bs-target="#confirmDeleteTypeModal<?php echo $id_type ?>" class="btn btn-danger button-modal-type">Delete</a></td>
 
                                         </tr>
-                                    </tbody>
-                                </table>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
 
-
-
-                                <!-- Modal Confirm Delete Type-->
-                                <div class="modal fade" id="confirmDeleteTypeModal" tabindex="-1" aria-labelledby="confirmDeleteTypeModalLabel<?php echo $id_type ?>" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="confirmDeleteTypeModalLabel<?php echo $id_type ?>">Excluir Tipo</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <h3 class="modal-title fs-6">Deseja Excluir Esse Tipo?</h3>
-                                                <!-- Aqui você pode adicionar mais detalhes sobre o tipo que está sendo excluído, se desejar -->
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a type="button" href="deletetype.php?id=<?php echo $id_type ?>" class="btn btn-primary button-modal-type">Confirmar</a>
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- END Modal Confirm Delete Type-->
-
-                            <?php } ?>
 
 
 
                         </div>
+
 
                         <div class="modal-footer">
                             <a><button type="submit" class="btn btn-primary">Confirmar</button></a>
@@ -268,6 +311,15 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+
+
+
+
 
 
     <main class="container mt-5">
@@ -313,7 +365,7 @@
                 <div class="card mb-3">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img class="formatavatar" src="candidates_img/<?= $imageName ?>" class="img-fluid rounded-start" alt="Product">
+                            <img class="formatavatar" src="candidates_img/<?= $imageName ?>" class="img-fluid rounded-start" alt="Product" title="Foto Produto">
                         </div>
 
                         <div class="col-md-8">
@@ -336,8 +388,8 @@
 
                                     <div class="buttons-estoque col">
 
-                                        <a type="button" class="mr-3" title="Editar produto" href="edit.php?id=<?php echo $id_product ?>"><img src="img/edit.png" class="edit-icon-estoque btn-effect"></a>
-                                        <a type="button" title="Deletar produto" data-bs-toggle="modal" href="" data-bs-target="#confirmDeleteProductModal<?php echo $id_product ?>"><img src="img/delete.png" class="delete-icon-estoque btn-effect"></a>
+                                        <a type="button" class="mr-3" title="Editar Produto" href="edit.php?id=<?php echo $id_product ?>"><img src="img/edit.png" class="edit-icon-estoque btn-effect"></a>
+                                        <a type="button" title="Deletar Produto" data-bs-toggle="modal" href="" data-bs-target="#confirmDeleteProductModal<?php echo $id_product ?>"><img src="img/delete.png" class="delete-icon-estoque btn-effect"></a>
                                     </div>
 
                                     <!-- Modal Confirm Delete Product-->
